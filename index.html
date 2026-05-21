@@ -8,16 +8,21 @@
 </head>
 <body>
 
-    <header>
-        <div class="system-status">
-            <div class="status-badge">
-                <div class="pulse-dot"></div>
-                <span class="mono">SYSTEM_OPERATIONAL // RUNNING</span>
+    <div class="top-layout-grid">
+        <header>
+            <div class="system-status">
+                <div class="status-badge">
+                    <div class="pulse-dot"></div>
+                    <span class="mono">SYSTEM_OPERATIONAL // RUNNING</span>
+                </div>
             </div>
-        </div>
-        <h1 id="profile-name">--------</h1>
-        <p class="subtitle" id="profile-discipline">--------</p>
-    </header>
+            <h1 id="profile-name">--------</h1>
+            <p class="subtitle" id="profile-discipline">--------</p>
+        </header>
+
+        <aside id="socials-vertical-rail">
+            </aside>
+    </div>
 
     <main>
         <section>
@@ -42,16 +47,9 @@
             <div class="grid" id="registries-grid">
                 </div>
         </section>
-
-        <section>
-            <h2>05 // System Connections</h2>
-            <div id="socials-grid">
-                </div>
-        </section>
     </main>
 
     <script>
-        // Async Engine to pull Data.json
         async function loadPortfolio() {
             try {
                 const response = await fetch('data.json');
@@ -97,21 +95,21 @@
                     </div>
                 `).join('');
 
-                // Render Social Connections
-                const socialGrid = document.getElementById('socials-grid');
-                socialGrid.innerHTML = `
-                    <a href="${data.github_url}" target="_blank" rel="noopener noreferrer" class="card social-card" style="display: flex; align-items: center; gap: 16px;">
-                        <svg class="github-icon" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                // Render Vertical Side Social Card
+                const socialRail = document.getElementById('socials-vertical-rail');
+                socialRail.innerHTML = `
+                    <a href="${data.github_url}" target="_blank" rel="noopener noreferrer" class="card social-card-vertical">
+                        <svg class="github-icon" viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
                         </svg>
-                        <div>
-                            <h3 style="margin-bottom: 2px;">Open Source Core</h3>
-                            <p style="margin-bottom: 0; font-size: 13px;">View active repositories, code streams, and version histories on @red-android</p>
+                        <div class="social-text-block">
+                            <h3>Open Source Core</h3>
+                            <p>Track my active repositories and environment streams live on @red-android.</p>
                         </div>
+                        <span class="mono tracking-label">CONNECT_GATE →</span>
                     </a>
                 `;
 
-                // Initialize scroll watcher after cards are rendered
                 initializeScrollWatcher();
 
             } catch (error) {
@@ -121,7 +119,7 @@
 
         // Real-Time Mouse-Tracking coordinate listener for Edge Glow
         document.addEventListener('mousemove', (e) => {
-            const cards = document.querySelectorAll('.card');
+            const cards = document.querySelectorAll('.card, .social-card-vertical');
             cards.forEach(card => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -131,7 +129,7 @@
             });
         });
 
-        // Smooth Scroll Viewport Interceptor
+        // Smooth Scroll Viewport Interceptors
         function initializeScrollWatcher() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
