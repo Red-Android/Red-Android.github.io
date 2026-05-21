@@ -176,6 +176,23 @@ h2::after { content: ""; flex-grow: 1; height: 1px; background: var(--border-mut
 }
 .card:hover .tag { border-color: rgba(16, 185, 129, 0.2); color: var(--text-primary); }
 
+/* Social Infrastructure Styling */
+.social-card {
+    grid-column: span 2;
+    cursor: pointer;
+}
+
+.github-icon {
+    color: var(--text-secondary);
+    transition: color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+}
+
+.social-card:hover .github-icon {
+    color: var(--accent-glow);
+    transform: scale(1.1) rotate(-4deg);
+}
+
 /* Keyframe Core Engines */
 @keyframes slideUp {
     from { opacity: 0; transform: translateY(30px); }
@@ -190,5 +207,6 @@ h2::after { content: ""; flex-grow: 1; height: 1px; background: var(--border-mut
 @media (max-width: 650px) {
     .grid { grid-template-columns: 1fr; }
     body { padding: 60px 16px; }
-    h1 { font-size: 36px; }
+    h1 { font-size: 34px; }
+    .social-card { grid-column: span 1; }
 }

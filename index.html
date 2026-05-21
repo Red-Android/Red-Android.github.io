@@ -42,6 +42,12 @@
             <div class="grid" id="registries-grid">
                 </div>
         </section>
+
+        <section>
+            <h2>05 // System Connections</h2>
+            <div id="socials-grid">
+                </div>
+        </section>
     </main>
 
     <script>
@@ -49,7 +55,7 @@
         async function loadPortfolio() {
             try {
                 const response = await fetch('data.json');
-                const data = await response.getJson ? await response.getJson() : await response.json();
+                const data = await response.json();
                 
                 document.getElementById('profile-name').textContent = data.name;
                 document.getElementById('profile-discipline').textContent = data.bio;
@@ -90,6 +96,20 @@
                         </div>
                     </div>
                 `).join('');
+
+                // Render Social Connections
+                const socialGrid = document.getElementById('socials-grid');
+                socialGrid.innerHTML = `
+                    <a href="${data.github_url}" target="_blank" rel="noopener noreferrer" class="card social-card" style="display: flex; align-items: center; gap: 16px;">
+                        <svg class="github-icon" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                        <div>
+                            <h3 style="margin-bottom: 2px;">Open Source Core</h3>
+                            <p style="margin-bottom: 0; font-size: 13px;">View active repositories, code streams, and version histories on @red-android</p>
+                        </div>
+                    </a>
+                `;
 
                 // Initialize scroll watcher after cards are rendered
                 initializeScrollWatcher();

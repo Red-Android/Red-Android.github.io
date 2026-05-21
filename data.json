@@ -1,11 +1,12 @@
 {
-  "name": "Red-Android",
-  "discipline": "Electronics & Computer System Engineering",
+  "name": "Red-android",
+  "discipline": "Electronics & Computer Science Engineering",
   "bio": "Bridging physical silicon architectures with optimized low-level software execution. Focusing on firmware development, hardware acceleration, and system-level performance optimizations.",
+  "github_url": "https://github.com/red-android",
   "vision": "To architect deeply integrated embedded ecosystems that optimize processing overhead. Navigating the intersection of hardware constraints and system computing velocity to eliminate software latency.",
   "academic": {
     "degree": "Bachelor of Technology (B.Tech)",
-    "major": "Electronics & Computer Science Engineering",
+    "major": "Electronics & Computer System Engineering",
     "institution": "KIIT University",
     "timeline": "2026 - 2030",
     "status": "TRACK_INITIALIZED"
