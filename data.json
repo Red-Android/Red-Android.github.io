@@ -1,0 +1,30 @@
+{
+  "name": "red-android",
+  "discipline": "Electronics & Computer System Engineering",
+  "bio": "Bridging physical silicon architectures with optimized low-level software execution. Focusing on firmware development, hardware acceleration, and system-level performance optimizations.",
+  "vision": "To architect deeply integrated embedded ecosystems that optimize processing overhead. Navigating the intersection of hardware constraints and system computing velocity to eliminate software latency.",
+  "academic": {
+    "degree": "Bachelor of Technology (B.Tech)",
+    "major": "Electronics & Computer Science Engineering",
+    "institution": "KIIT University",
+    "timeline": "2026 - 2030",
+    "status": "TRACK_INITIALIZED"
+  },
+  "skills": [
+    { "category": "Low-Level Core", "items": ["C/C++", "Memory Management", "Pointers & Structures", "Data Structures"] },
+    { "category": "Hardware / Systems", "items": ["Microcontrollers", "Digital Systems", "Circuit Architecture", "Git Version Control"] },
+    { "category": "Software Track", "items": ["Asynchronous JavaScript", "CSS Grid/Flexbox", "HTML5 Engine", "Linux Systems"] }
+  ],
+  "registries": [
+    {
+      "title": "CS50x 2026 Sandbox",
+      "description": "Core computer science algorithms, memory layouts, pointer tracking systems, and sorting architectures.",
+      "tags": ["C Programming", "Algorithms", "Data Structures"]
+    },
+    {
+      "title": "Low-Level Portfolio Engine",
+      "description": "A high-performance, asynchronous JSON-driven web architecture utilizing modular design systems.",
+      "tags": ["Asynchronous JS", "Dynamic UI", "CSS Engineering"]
+    }
+  ]
+}

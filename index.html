@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>red-android // ECSE Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="system-status">
+            <div class="status-badge">
+                <div class="pulse-dot"></div>
+                <span class="mono">SYSTEM_OPERATIONAL // RUNNING</span>
+            </div>
+        </div>
+        <h1 id="profile-name">--------</h1>
+        <p class="subtitle" id="profile-discipline">--------</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>01 // Core Vision</h2>
+            <div class="vision-card" id="profile-vision">--------</div>
+        </section>
+
+        <section>
+            <h2>02 // Academic Infrastructure</h2>
+            <div class="grid" id="academic-grid">
+                </div>
+        </section>
+
+        <section>
+            <h2>03 // System Skills Matrix</h2>
+            <div class="grid" id="skills-grid">
+                </div>
+        </section>
+
+        <section>
+            <h2>04 // Active Registries</h2>
+            <div class="grid" id="registries-grid">
+                </div>
+        </section>
+    </main>
+
+    <script>
+        // Async Engine to pull Data.json
+        async function loadPortfolio() {
+            try {
+                const response = await fetch('data.json');
+                const data = await response.getJson ? await response.getJson() : await response.json();
+                
+                document.getElementById('profile-name').textContent = data.name;
+                document.getElementById('profile-discipline').textContent = data.bio;
+                document.getElementById('profile-vision').textContent = data.vision;
+
+                // Render Academic
+                const acadGrid = document.getElementById('academic-grid');
+                acadGrid.innerHTML = `
+                    <div class="card" style="grid-column: span 2;">
+                        <h3>${data.academic.institution}</h3>
+                        <p>${data.academic.degree} in ${data.academic.major}</p>
+                        <div class="tags">
+                            <span class="tag mono">${data.academic.timeline}</span>
+                            <span class="tag mono" style="color:#10b981;">${data.academic.status}</span>
+                        </div>
+                    </div>
+                `;
+
+                // Render Skills
+                const skillsGrid = document.getElementById('skills-grid');
+                skillsGrid.innerHTML = data.skills.map(skill => `
+                    <div class="card">
+                        <h3>${skill.category}</h3>
+                        <div class="tags" style="margin-top:16px;">
+                            ${skill.items.map(i => `<span class="tag">${i}</span>`).join('')}
+                        </div>
+                    </div>
+                `).join('');
+
+                // Render Registries
+                const regGrid = document.getElementById('registries-grid');
+                regGrid.innerHTML = data.registries.map(reg => `
+                    <div class="card">
+                        <h3>${reg.title}</h3>
+                        <p>${reg.description}</p>
+                        <div class="tags">
+                            ${reg.tags.map(t => `<span class="tag mono">${t}</span>`).join('')}
+                        </div>
+                    </div>
+                `).join('');
+
+                // Initialize scroll watcher after cards are rendered
+                initializeScrollWatcher();
+
+            } catch (error) {
+                console.error("Data tracking initialization failed:", error);
+            }
+        }
+
+        // Real-Time Mouse-Tracking coordinate listener for Edge Glow
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // Smooth Scroll Viewport Interceptor
+        function initializeScrollWatcher() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.05 });
+
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', loadPortfolio);
+    </script>
+</body>
+</html>
