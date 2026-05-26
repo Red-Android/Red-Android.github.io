@@ -12,7 +12,7 @@
     "status": "TRACK_INITIALIZED"
   },
   "skills": [
-    { "category": "Low-Level Core", "items": ["C/C++", "Memory Management", "Pointers & Structures", "Data Structures"] },
+    { "category": "Low-Level Core", "items": ["C/C++", "Memory Management", "Pointers & Structures", "Data Structures","Python Basics"] },
     { "category": "Hardware / Systems", "items": ["Microcontrollers", "Digital Systems", "Circuit Architecture", "Git Version Control"] },
     { "category": "Software Track", "items": ["Asynchronous JavaScript", "CSS Grid/Flexbox", "HTML5 Engine", "Linux Systems"] }
   ],
