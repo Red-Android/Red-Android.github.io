@@ -8,6 +8,9 @@
 </head>
 <body>
 
+    <div class="custom-cursor-dot"></div>
+    <div class="custom-cursor-ring"></div>
+
     <div class="top-layout-grid">
         <header>
             <div class="system-status">
@@ -21,7 +24,7 @@
         </header>
 
         <aside id="socials-vertical-rail">
-            </aside>
+        </aside>
     </div>
 
     <main>
@@ -33,19 +36,19 @@
         <section>
             <h2>02 // Academic Infrastructure</h2>
             <div class="grid" id="academic-grid">
-                </div>
+            </div>
         </section>
 
         <section>
             <h2>03 // System Skills Matrix</h2>
             <div class="grid" id="skills-grid">
-                </div>
+            </div>
         </section>
 
         <section>
             <h2>04 // Active Registries</h2>
             <div class="grid" id="registries-grid">
-                </div>
+            </div>
         </section>
     </main>
 
@@ -111,6 +114,7 @@
                 `;
 
                 initializeScrollWatcher();
+                initializeCursorInteractions();
 
             } catch (error) {
                 console.error("Data tracking initialization failed:", error);
@@ -143,6 +147,52 @@
                 observer.observe(section);
             });
         }
+
+        // ==========================================================================
+        // DYNAMIC MOUSE CORE POSITION CODESPACE
+        // ==========================================================================
+        const cursorDot = document.querySelector('.custom-cursor-dot');
+        const cursorRing = document.querySelector('.custom-cursor-ring');
+
+        let mouseX = 0, mouseY = 0; 
+        let ringX = 0, ringY = 0;   
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            cursorDot.style.left = `${mouseX}px`;
+            cursorDot.style.top = `${mouseY}px`;
+        });
+
+        function renderCursorEngine() {
+            ringX += (mouseX - ringX) * 0.15;
+            ringY += (mouseY - ringY) * 0.15;
+            
+            cursorRing.style.left = `${ringX}px`;
+            cursorRing.style.top = `${ringY}px`;
+            
+            requestAnimationFrame(renderCursorEngine);
+        }
+        requestAnimationFrame(renderCursorEngine); 
+
+        function initializeCursorInteractions() {
+            const interactiveElements = document.querySelectorAll('.card, .social-card-vertical, a, .tag');
+            
+            interactiveElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    cursorDot.classList.add('hover-active');
+                    cursorRing.classList.add('hover-active');
+                });
+                element.addEventListener('mouseleave', () => {
+                    cursorDot.classList.remove('hover-active');
+                    cursorRing.classList.remove('hover-active');
+                });
+            });
+        }
+
+        document.addEventListener('mousedown', () => cursorRing.classList.add('click-active'));
+        document.addEventListener('mouseup', () => cursorRing.classList.remove('click-active'));
 
         window.addEventListener('DOMContentLoaded', loadPortfolio);
     </script>
