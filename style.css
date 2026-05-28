@@ -2,14 +2,14 @@
     --bg-base: #030712;        
     --bg-surface: #090d16;     
     --border-muted: #1f2937;   
-    --accent-glow: #10b981;    
+    --accent-glow: #10b981;    /* Theme Operational Green */
     --text-primary: #ffffff;   
     --text-secondary: #9ca3af; 
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* Suppress system pointer to let custom engine takeover safely */
+/* Suppress standard native OS pointers */
 html, body, a, .card, .social-card-vertical, .tag {
     cursor: none !important;
 }
@@ -86,7 +86,6 @@ p.subtitle {
     color: var(--text-secondary);
 }
 
-/* Vertical Side Card Structural Properties */
 #socials-vertical-rail {
     opacity: 0;
     transform: translateY(20px);
@@ -94,40 +93,153 @@ p.subtitle {
     animation-delay: 0.1s;
 }
 
-.social-card-vertical {
+/* Scroll-Driven Viewport Architecture */
+section {
+    margin-bottom: 70px;
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(4px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+section.visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+/* ==========================================================================
+   LUMINESCENT MAINIC FRAME HEADINGS (h2 MATRIX)
+   ========================================================================== */
+h2 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent-glow); 
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.35), 
+                 0 0 20px rgba(16, 185, 129, 0.15); 
+    margin-bottom: 24px;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: start;
-    min-height: 195px;
+    align-items: center;
+    gap: 12px;
+    transition: text-shadow 0.3s ease, color 0.3s ease;
+}
+
+h2::after { 
+    content: ""; 
+    flex-grow: 1; 
+    height: 1px; 
+    background: linear-gradient(90deg, rgba(31, 41, 55, 0.8) 0%, rgba(31, 41, 55, 0) 100%); 
+}
+
+.vision-card {
     background-color: var(--bg-surface);
     border: 1px solid var(--border-muted);
+    border-radius: 8px;
+    padding: 28px;
+    font-size: 16px;
+    color: var(--text-secondary);
+}
+
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+
+/* ==========================================================================
+   UPGRADED ROTATING CONIC GLOW MATRIX CARDS
+   ========================================================================== */
+.card, .social-card-vertical {
+    background-color: var(--bg-surface);
     border-radius: 8px;
     padding: 24px;
     text-decoration: none;
     color: inherit;
     position: relative;
     overflow: hidden;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
 }
 
-.social-card-vertical::before {
+.social-card-vertical {
+    min-height: 195px;
+    justify-content: space-between;
+    align-items: start;
+}
+
+/* The High-Intensity Spinning Underlying Conic Light Beam */
+.card::before, .social-card-vertical::before {
     content: "";
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(260px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(16, 185, 129, 0.07), transparent 50%);
-    z-index: 1;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.4s ease;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: conic-gradient(
+        from 0deg,
+        transparent 60%,
+        #00f2fe 85%, 
+        transparent 100%
+    );
+    z-index: -2;
+    opacity: 0.45; /* High idle visual visibility output */
+    filter: blur(2px) drop-shadow(0 0 8px rgba(0, 242, 254, 0.3)); 
+    animation: rotateSystemBeam 4s linear infinite;
+    transition: background 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
 }
 
-.social-card-vertical:hover::before { opacity: 1; }
-.social-card-vertical:hover {
-    transform: translateY(-3px);
-    border-color: var(--accent-glow);
-    box-shadow: 0 12px 40px rgba(16, 185, 129, 0.02);
+/* The Inner Mask - Leaves a exact 1px gap on the outer perimeter edge */
+.card::after, .social-card-vertical::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    background: var(--bg-surface);
+    border-radius: 7px;
+    z-index: -1;
+    pointer-events: none;
 }
+
+/* Mouse Hover Collision Flare Interception */
+.card:hover::before, .social-card-vertical:hover::before {
+    opacity: 1;
+    background: conic-gradient(
+        from 0deg,
+        transparent 60%,
+        var(--accent-glow) 85%, 
+        transparent 100%
+    );
+    filter: blur(0px) drop-shadow(0 0 18px var(--accent-glow));
+    animation-duration: 2s; /* Rotational speed acceleration */
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(16, 185, 129, 0.04);
+}
+
+/* Layers inner card layout elements over the background animation */
+.card h3, .card p, .tags, .social-text-block, .tracking-label, .github-icon {
+    position: relative;
+    z-index: 2;
+}
+
+.card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.card h3::after {
+    content: "→";
+    color: var(--accent-glow);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card:hover h3::after { opacity: 1; transform: translateX(0); }
+
+.card p { font-size: 13.5px; color: var(--text-secondary); margin-bottom: 16px; }
 
 .social-card-vertical p {
     font-size: 13px;
@@ -157,97 +269,7 @@ p.subtitle {
     color: var(--accent-glow);
 }
 
-/* Scroll-Driven Viewport Architecture */
-section {
-    margin-bottom: 70px;
-    opacity: 0;
-    transform: translateY(30px);
-    filter: blur(4px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
-                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
-                filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-section.visible {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-}
-
-h2 {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--text-secondary);
-    margin-bottom: 24px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-h2::after { content: ""; flex-grow: 1; height: 1px; background: var(--border-muted); }
-
-.vision-card {
-    background-color: var(--bg-surface);
-    border: 1px solid var(--border-muted);
-    border-radius: 8px;
-    padding: 28px;
-    font-size: 16px;
-    color: var(--text-secondary);
-}
-
-.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-
-/* Interactive Cards Matrix */
-.card {
-    background-color: var(--bg-surface);
-    border: 1px solid var(--border-muted);
-    border-radius: 8px;
-    padding: 24px;
-    text-decoration: none;
-    color: inherit;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
-}
-
-.card::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(260px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(16, 185, 129, 0.07), transparent 50%);
-    z-index: 1;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.card:hover::before { opacity: 1; }
-.card:hover {
-    transform: translateY(-3px);
-    border-color: var(--accent-glow);
-    box-shadow: 0 12px 40px rgba(16, 185, 129, 0.02);
-}
-
-.card h3 {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.card h3::after {
-    content: "→";
-    color: var(--accent-glow);
-    opacity: 0;
-    transform: translateX(-10px);
-    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.card:hover h3::after { opacity: 1; transform: translateX(0); }
-
-.card p { font-size: 13.5px; color: var(--text-secondary); margin-bottom: 16px; }
-
-.tags { display: flex; gap: 6px; flex-wrap: wrap; position: relative; z-index: 2; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; }
 .tag {
     font-family: ui-monospace, monospace;
     font-size: 11px;
@@ -258,17 +280,6 @@ h2::after { content: ""; flex-grow: 1; height: 1px; background: var(--border-mut
     color: var(--text-secondary);
 }
 .card:hover .tag { border-color: rgba(16, 185, 129, 0.15); color: var(--text-primary); }
-
-/* Animation Parameters */
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-@keyframes pulse {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-    70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-}
 
 /* ==========================================================================
    CUSTOM CURSOR SYSTEM ELEMENT STRUCTS
@@ -300,11 +311,10 @@ h2::after { content: ""; flex-grow: 1; height: 1px; background: var(--border-mut
                 background-color 0.3s ease;
 }
 
-/* Hover Micro-Interaction Variant Rules */
 .custom-cursor-dot.hover-active {
     width: 6px;
     height: 6px;
-    background-color: var(--accent-glow); /* Match system operational green */
+    background-color: var(--accent-glow); 
 }
 
 .custom-cursor-ring.hover-active {
@@ -314,7 +324,6 @@ h2::after { content: ""; flex-grow: 1; height: 1px; background: var(--border-mut
     background-color: rgba(16, 185, 129, 0.04);
 }
 
-/* Hardware Physical Click Compression */
 .custom-cursor-ring.click-active {
     width: 16px;
     height: 16px;
@@ -322,7 +331,24 @@ h2::after { content: ""; flex-grow: 1; height: 1px; background: var(--border-mut
     background-color: rgba(0, 242, 254, 0.15);
 }
 
-/* Fluid Mobile Adaptation Controls */
+/* Keyframe Core Animations */
+@keyframes rotateSystemBeam {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+    70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* Responsive Adaptive Viewports - Strip Custom Pointers on Touch Screens */
 @media (max-width: 700px) {
     .custom-cursor-dot, .custom-cursor-ring { display: none !important; }
     html, body, a, .card, .social-card-vertical, .tag { cursor: auto !important; }
