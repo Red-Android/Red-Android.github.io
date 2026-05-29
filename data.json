@@ -4,28 +4,45 @@
   "bio": "Bridging physical silicon architectures with optimized low-level software execution. Focusing on firmware development, hardware acceleration, and system-level performance optimizations.",
   "github_url": "https://github.com/red-android",
   "vision": "To architect deeply integrated embedded ecosystems that optimize processing overhead. Navigating the intersection of hardware constraints and system computing velocity to eliminate software latency.",
-  "academic": {
-    "degree": "Bachelor of Technology (B.Tech)",
-    "major": "Electronics & Computer Science Engineering",
-    "institution": "KIIT University",
-    "timeline": "2026 - 2030",
-    "status": "TRACK_INITIALIZED"
-  },
+  "academic": [
+    {
+      "degree": "Bachelor of Technology (B.Tech)",
+      "major": "Electronics & Computer Science Engineering",
+      "institution": "KIIT University",
+      "timeline": "2026 - 2030",
+      "status": "TRACK_INITIALIZED",
+      "extended_details": "Electronics & Computer Science Engineering (ECSE) at KIIT focuses on processing logic constraints. The curriculum bridges hardware engineering (semiconductor structures, microcontrollers, embedded firmware architectures) with advanced computer science theories (memory mapping optimizations, algorithmic logic, and computing execution safety loops)."
+    }
+  ],
   "skills": [
-    { "category": "Low-Level Core", "items": ["C/C++", "Memory Management", "Pointers & Structures", "Data Structures","Python Basics"] },
-    { "category": "Hardware / Systems", "items": ["Microcontrollers", "Digital Systems", "Circuit Architecture", "Git Version Control"] },
-    { "category": "Software Track", "items": ["Asynchronous JavaScript", "CSS Grid/Flexbox", "HTML5 Engine", "Linux Systems"] }
+    { 
+      "category": "Low-Level Core", 
+      "items": ["C/C++", "Memory Management", "Pointers & Structures", "Data Structures","Python Basics"],
+      "extended_details": "Deep focus on unmanaged execution spaces. Engineering performance software models by micro-managing raw RAM allocations, eliminating memory leaks through manual tracking frameworks, optimizing data parsing layers via pointer arithmetic arrays, and auditing complex structural algorithms."
+    },
+    { 
+      "category": "Hardware / Systems", 
+      "items": ["Microcontrollers", "Digital Systems", "Circuit Architecture", "Git Version Control"],
+      "extended_details": "Firmware and hardware compilation systems. Interfacing low-level code instructions directly with register maps on microcontrollers, debugging logic gates in digital circuit architectures, and organizing version trees to coordinate hardware-software parity constraints."
+    },
+    { 
+      "category": "Software Track", 
+      "items": ["Asynchronous JavaScript", "CSS Grid/Flexbox", "HTML5 Engine", "Linux Systems"],
+      "extended_details": "High-velocity client interface runtimes. Structuring event-driven execution loops via non-blocking asynchronous threads, engineering native mathematical layout grids within browser rendering environments, and operating directly inside Linux shell terminals."
+    }
   ],
   "registries": [
     {
       "title": "CS50x 2026 Sandbox",
       "description": "Core computer science algorithms, memory layouts, pointer tracking systems, and sorting architectures.",
-      "tags": ["C Programming", "Algorithms", "Data Structures"]
+      "tags": ["C Programming", "Algorithms", "Data Structures"],
+      "extended_details": "Active low-level software testing sandbox. Writing C solutions to master stack/heap allocation limits, tracing raw physical pointer nodes through linear execution blocks, tracking system bottlenecks, and studying continuous data arrays."
     },
     {
       "title": "Low-Level Portfolio Engine",
       "description": "A high-performance, asynchronous JSON-driven web architecture utilizing modular design systems.",
-      "tags": ["Asynchronous JS", "Dynamic UI", "CSS Engineering"]
+      "tags": ["Asynchronous JS", "Dynamic UI", "CSS Engineering"],
+      "extended_details": "The code subsystem fueling this exact website shell. Built using asynchronous data-fetching pipelines that read static asset registries on the fly, paired with complex CSS mathematical calculation matrices for custom cursor tracking loops and revolving conic light fields."
     }
   ]
 }

@@ -2,15 +2,14 @@
     --bg-base: #030712;        
     --bg-surface: #090d16;     
     --border-muted: #1f2937;   
-    --accent-glow: #10b981;    /* Theme Operational Green */
+    --accent-glow: #10b981;    
     --text-primary: #ffffff;   
     --text-secondary: #9ca3af; 
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* Suppress standard native OS pointers */
-html, body, a, .card, .social-card-vertical, .tag {
+html, body, a, .card, .social-card-vertical, .tag, .overlay-close-trigger {
     cursor: none !important;
 }
 
@@ -25,7 +24,16 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* Structural Split Asymmetric Layout for Headings */
+#master-page-wrapper {
+    transition: filter 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: filter, transform;
+}
+
+#master-page-wrapper.blurred-state {
+    filter: blur(12px); 
+    transform: scale(0.98); 
+}
+
 .top-layout-grid {
     display: grid;
     grid-template-columns: 1.4fr 0.8fr;
@@ -93,15 +101,12 @@ p.subtitle {
     animation-delay: 0.1s;
 }
 
-/* Scroll-Driven Viewport Architecture */
 section {
     margin-bottom: 70px;
     opacity: 0;
     transform: translateY(30px);
     filter: blur(4px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
-                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
-                filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 section.visible {
@@ -110,21 +115,16 @@ section.visible {
     filter: blur(0);
 }
 
-/* ==========================================================================
-   LUMINESCENT MAINIC FRAME HEADINGS (h2 MATRIX)
-   ========================================================================== */
 h2 {
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 2px;
     color: var(--accent-glow); 
-    text-shadow: 0 0 10px rgba(16, 185, 129, 0.35), 
-                 0 0 20px rgba(16, 185, 129, 0.15); 
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.35), 0 0 20px rgba(16, 185, 129, 0.15); 
     margin-bottom: 24px;
     display: flex;
     align-items: center;
     gap: 12px;
-    transition: text-shadow 0.3s ease, color 0.3s ease;
 }
 
 h2::after { 
@@ -144,6 +144,10 @@ h2::after {
 }
 
 .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+
+.long-span-card {
+    grid-column: span 2;
+}
 
 /* ==========================================================================
    UPGRADED ROTATING CONIC GLOW MATRIX CARDS
@@ -168,26 +172,19 @@ h2::after {
     align-items: start;
 }
 
-/* The High-Intensity Spinning Underlying Conic Light Beam */
 .card::before, .social-card-vertical::before {
     content: "";
     position: absolute;
     top: -50%; left: -50%;
     width: 200%; height: 200%;
-    background: conic-gradient(
-        from 0deg,
-        transparent 60%,
-        #00f2fe 85%, 
-        transparent 100%
-    );
+    background: conic-gradient(from 0deg, transparent 60%, #00f2fe 85%, transparent 100%);
     z-index: -2;
-    opacity: 0.45; /* High idle visual visibility output */
+    opacity: 0.45; 
     filter: blur(2px) drop-shadow(0 0 8px rgba(0, 242, 254, 0.3)); 
     animation: rotateSystemBeam 4s linear infinite;
     transition: background 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
 }
 
-/* The Inner Mask - Leaves a exact 1px gap on the outer perimeter edge */
 .card::after, .social-card-vertical::after {
     content: "";
     position: absolute;
@@ -198,17 +195,11 @@ h2::after {
     pointer-events: none;
 }
 
-/* Mouse Hover Collision Flare Interception */
 .card:hover::before, .social-card-vertical:hover::before {
     opacity: 1;
-    background: conic-gradient(
-        from 0deg,
-        transparent 60%,
-        var(--accent-glow) 85%, 
-        transparent 100%
-    );
+    background: conic-gradient(from 0deg, transparent 60%, var(--accent-glow) 85%, transparent 100%);
     filter: blur(0px) drop-shadow(0 0 18px var(--accent-glow));
-    animation-duration: 2s; /* Rotational speed acceleration */
+    animation-duration: 2s; 
 }
 
 .card:hover {
@@ -216,7 +207,6 @@ h2::after {
     box-shadow: 0 12px 40px rgba(16, 185, 129, 0.04);
 }
 
-/* Layers inner card layout elements over the background animation */
 .card h3, .card p, .tags, .social-text-block, .tracking-label, .github-icon {
     position: relative;
     z-index: 2;
@@ -282,17 +272,100 @@ h2::after {
 .card:hover .tag { border-color: rgba(16, 185, 129, 0.15); color: var(--text-primary); }
 
 /* ==========================================================================
-   CUSTOM CURSOR SYSTEM ELEMENT STRUCTS
+   DYNAMIC KINETIC MODAL OVERLAY COMPONENT STYLING
+   ========================================================================== */
+.overlay-panel-container {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(2, 6, 23, 0.4); 
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.overlay-panel-container.panel-active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.overlay-panel-box {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-muted);
+    width: 100%;
+    max-width: 620px; 
+    border-radius: 12px;
+    padding: 44px; 
+    position: relative;
+    box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.7);
+    
+    transform-origin: var(--origin-left, 50%) var(--origin-top, 50%);
+    transform: scale(0.05) translate(0, 0);
+    opacity: 0;
+    filter: blur(10px);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease, filter 0.4s ease;
+}
+
+.overlay-panel-container.panel-active .overlay-panel-box {
+    transform: scale(1) translate(0, 0);
+    opacity: 1;
+    filter: blur(0px);
+}
+
+/* Upgraded Clean Minimalist Close Anchor Indicator */
+.overlay-close-trigger {
+    position: absolute;
+    top: 24px;
+    right: 28px;
+    background: none;
+    border: none;
+    color: var(--accent-glow); /* Binds default state text color to theme green */
+    font-size: 16px;
+    font-weight: 400;
+    font-family: ui-monospace, monospace;
+    /* Soft dual-layer radioactive shadow projection */
+    text-shadow: 0 0 8px rgba(16, 185, 129, 0.4), 
+                 0 0 16px rgba(16, 185, 129, 0.2);
+    transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.overlay-close-trigger:hover {
+    color: #ffffff; /* Shifts clean stark white on active pointer collision */
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+    transform: scale(1.1);
+}
+
+.accent-title-glow {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.75px;
+    color: var(--text-primary);
+    line-height: 1.25;
+}
+
+.mono-text-stream {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    white-space: pre-wrap;
+}
+
+/* ==========================================================================
+   CUSTOM CURSOR REGISTERS
    ========================================================================== */
 .custom-cursor-dot {
     width: 4px;
     height: 4px;
-    background-color: #00f2fe; /* Cyber Cyan Base */
+    background-color: #00f2fe; 
     border-radius: 50%;
     position: fixed;
     transform: translate(-50%, -50%);
     pointer-events: none;
-    z-index: 9999;
+    z-index: 10001; 
     transition: width 0.2s ease, height 0.2s ease, background-color 0.3s ease;
 }
 
@@ -304,57 +377,32 @@ h2::after {
     position: fixed;
     transform: translate(-50%, -50%);
     pointer-events: none;
-    z-index: 9998;
-    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-                height 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-                border-color 0.3s ease, 
-                background-color 0.3s ease;
+    z-index: 10000;
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, background-color 0.3s ease;
 }
 
-.custom-cursor-dot.hover-active {
-    width: 6px;
-    height: 6px;
-    background-color: var(--accent-glow); 
-}
+.custom-cursor-dot.hover-active { width: 6px; height: 6px; background-color: var(--accent-glow); }
+.custom-cursor-ring.hover-active { width: 38px; height: 38px; border-color: var(--accent-glow); background-color: rgba(16, 185, 129, 0.04); }
+.custom-cursor-ring.click-active { width: 16px; height: 16px; border-color: #00f2fe; background-color: rgba(0, 242, 254, 0.15); }
 
-.custom-cursor-ring.hover-active {
-    width: 38px;
-    height: 38px;
-    border-color: var(--accent-glow);
-    background-color: rgba(16, 185, 129, 0.04);
-}
-
-.custom-cursor-ring.click-active {
-    width: 16px;
-    height: 16px;
-    border-color: #00f2fe;
-    background-color: rgba(0, 242, 254, 0.15);
-}
-
-/* Keyframe Core Animations */
-@keyframes rotateSystemBeam {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
+@keyframes rotateSystemBeam { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes pulse {
     0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
     70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
     100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
 }
 
-/* Responsive Adaptive Viewports - Strip Custom Pointers on Touch Screens */
 @media (max-width: 700px) {
     .custom-cursor-dot, .custom-cursor-ring { display: none !important; }
-    html, body, a, .card, .social-card-vertical, .tag { cursor: auto !important; }
+    html, body, a, .card, .social-card-vertical, .tag, .overlay-close-trigger { cursor: auto !important; }
     .top-layout-grid { grid-template-columns: 1fr; gap: 24px; margin-bottom: 40px; }
     .grid { grid-template-columns: 1fr; }
+    .long-span-card { grid-column: span 1; }
     body { padding: 40px 16px; }
     h1 { font-size: 34px; }
     .social-card-vertical { min-height: auto; gap: 12px; }
+    .overlay-panel-box { padding: 24px; padding-top: 54px; transform-origin: center center !important; }
+    .accent-title-glow { font-size: 22px; }
+    #master-page-wrapper.blurred-state { filter: blur(6px); transform: scale(1); }
 }

@@ -11,46 +11,63 @@
     <div class="custom-cursor-dot"></div>
     <div class="custom-cursor-ring"></div>
 
-    <div class="top-layout-grid">
-        <header>
-            <div class="system-status">
-                <div class="status-badge">
-                    <div class="pulse-dot"></div>
-                    <span class="mono">SYSTEM_OPERATIONAL // RUNNING</span>
+    <div id="master-page-wrapper">
+        <div class="top-layout-grid">
+            <header>
+                <div class="system-status">
+                    <div class="status-badge">
+                        <div class="pulse-dot"></div>
+                        <span class="mono">SYSTEM_OPERATIONAL // RUNNING</span>
+                    </div>
                 </div>
-            </div>
-            <h1 id="profile-name">--------</h1>
-            <p class="subtitle" id="profile-discipline">--------</p>
-        </header>
+                <h1 id="profile-name">--------</h1>
+                <p class="subtitle" id="profile-discipline">--------</p>
+            </header>
 
-        <aside id="socials-vertical-rail">
-        </aside>
+            <aside id="socials-vertical-rail">
+            </aside>
+        </div>
+
+        <main>
+            <section>
+                <h2>01 // Core Vision</h2>
+                <div class="vision-card" id="profile-vision">--------</div>
+            </section>
+
+            <section>
+                <h2>02 // Academic Infrastructure</h2>
+                <div class="grid" id="academic-grid">
+                </div>
+            </section>
+
+            <section>
+                <h2>03 // System Skills Matrix</h2>
+                <div class="grid" id="skills-grid">
+                </div>
+            </section>
+
+            <section>
+                <h2>04 // Active Registries</h2>
+                <div class="grid" id="registries-grid">
+                </div>
+            </section>
+        </main>
     </div>
 
-    <main>
-        <section>
-            <h2>01 // Core Vision</h2>
-            <div class="vision-card" id="profile-vision">--------</div>
-        </section>
-
-        <section>
-            <h2>02 // Academic Infrastructure</h2>
-            <div class="grid" id="academic-grid">
+    <div class="overlay-panel-container" id="system-overlay-panel">
+        <div class="overlay-panel-box" id="system-overlay-box">
+            <button class="overlay-close-trigger" id="overlay-close-btn">✕</button>
+            <div class="overlay-data-payload">
+                <div class="status-badge" style="margin-bottom: 24px; display: inline-flex;">
+                    <div class="pulse-dot"></div>
+                    <span class="mono" id="overlay-node-id">SYSTEM_INFO_READOUT</span>
+                </div>
+                <h3 id="overlay-title" class="accent-title-glow">--------</h3>
+                <div class="tags" id="overlay-tags" style="margin: 24px 0;"></div>
+                <p id="overlay-desc" class="mono-text-stream">--------</p>
             </div>
-        </section>
-
-        <section>
-            <h2>03 // System Skills Matrix</h2>
-            <div class="grid" id="skills-grid">
-            </div>
-        </section>
-
-        <section>
-            <h2>04 // Active Registries</h2>
-            <div class="grid" id="registries-grid">
-            </div>
-        </section>
-    </main>
+        </div>
+    </div>
 
     <script>
         async function loadPortfolio() {
@@ -62,23 +79,23 @@
                 document.getElementById('profile-discipline').textContent = data.bio;
                 document.getElementById('profile-vision').textContent = data.vision;
 
-                // Render Academic
+                // Render Academic Infrastructure Loop (Restored to Full Span)
                 const acadGrid = document.getElementById('academic-grid');
-                acadGrid.innerHTML = `
-                    <div class="card" style="grid-column: span 2;">
-                        <h3>${data.academic.institution}</h3>
-                        <p>${data.academic.degree} in ${data.academic.major}</p>
+                acadGrid.innerHTML = data.academic.map(acad => `
+                    <div class="card click-expand-node long-span-card" data-title="${acad.institution}" data-category="ACADEMIC_INFRASTRUCTURE" data-details="${acad.extended_details}" data-tags="${acad.degree},${acad.timeline}">
+                        <h3>${acad.institution}</h3>
+                        <p>${acad.degree} in ${acad.major}</p>
                         <div class="tags">
-                            <span class="tag mono">${data.academic.timeline}</span>
-                            <span class="tag mono" style="color:#10b981;">${data.academic.status}</span>
+                            <span class="tag mono">${acad.timeline}</span>
+                            <span class="tag mono" style="color:#10b981;">${acad.status}</span>
                         </div>
                     </div>
-                `;
+                `).join('');
 
-                // Render Skills
+                // Render Skills Matrix Loop
                 const skillsGrid = document.getElementById('skills-grid');
                 skillsGrid.innerHTML = data.skills.map(skill => `
-                    <div class="card">
+                    <div class="card click-expand-node" data-title="${skill.category}" data-category="SKILL_MATRIX_REGISTRY" data-details="${skill.extended_details}" data-tags="${skill.items.join(',')}">
                         <h3>${skill.category}</h3>
                         <div class="tags" style="margin-top:16px;">
                             ${skill.items.map(i => `<span class="tag">${i}</span>`).join('')}
@@ -86,10 +103,10 @@
                     </div>
                 `).join('');
 
-                // Render Registries
+                // Render Registries Loop
                 const regGrid = document.getElementById('registries-grid');
                 regGrid.innerHTML = data.registries.map(reg => `
-                    <div class="card">
+                    <div class="card click-expand-node" data-title="${reg.title}" data-category="ACTIVE_REGISTRY_BLOCK" data-details="${reg.extended_details}" data-tags="${reg.tags.join(',')}">
                         <h3>${reg.title}</h3>
                         <p>${reg.description}</p>
                         <div class="tags">
@@ -115,6 +132,7 @@
 
                 initializeScrollWatcher();
                 initializeCursorInteractions();
+                initializeOverlayEngine();
 
             } catch (error) {
                 console.error("Data tracking initialization failed:", error);
@@ -137,7 +155,57 @@
         }
 
         // ==========================================================================
-        // DYNAMIC MOUSE CORE POSITION CODESPACE
+        // DYNAMIC KINETIC BLAST OVERLAY ENGINE
+        // ==========================================================================
+        function initializeOverlayEngine() {
+            const overlayPanel = document.getElementById('system-overlay-panel');
+            const overlayBox = document.getElementById('system-overlay-box');
+            const pageWrapper = document.getElementById('master-page-wrapper');
+            const closeBtn = document.getElementById('overlay-close-btn');
+            const expandNodes = document.querySelectorAll('.click-expand-node');
+
+            const overlayNodeId = document.getElementById('overlay-node-id');
+            const overlayTitle = document.getElementById('overlay-title');
+            const overlayTags = document.getElementById('overlay-tags');
+            const overlayDesc = document.getElementById('overlay-desc');
+
+            let sourceNode = null; 
+
+            expandNodes.forEach(node => {
+                node.addEventListener('click', () => {
+                    sourceNode = node;
+                    const rect = node.getBoundingClientRect();
+
+                    overlayBox.style.setProperty('--origin-top', `${rect.top + (rect.height / 2)}px`);
+                    overlayBox.style.setProperty('--origin-left', `${rect.left + (rect.width / 2)}px`);
+
+                    overlayNodeId.textContent = `NODE_READOUT // ${node.getAttribute('data-category')}`;
+                    overlayTitle.textContent = node.getAttribute('data-title');
+                    overlayDesc.textContent = node.getAttribute('data-details');
+                    overlayTags.innerHTML = node.getAttribute('data-tags').split(',').map(t => `<span class="tag mono">${t}</span>`).join('');
+
+                    overlayPanel.classList.add('panel-active');
+                    pageWrapper.classList.add('blurred-state');
+                });
+            });
+
+            function collapsePanelGate() {
+                if (!sourceNode) return;
+                const rect = sourceNode.getBoundingClientRect();
+                
+                overlayBox.style.setProperty('--origin-top', `${rect.top + (rect.height / 2)}px`);
+                overlayBox.style.setProperty('--origin-left', `${rect.left + (rect.width / 2)}px`);
+
+                overlayPanel.classList.remove('panel-active');
+                pageWrapper.classList.remove('blurred-state');
+            }
+
+            closeBtn.addEventListener('click', collapsePanelGate);
+            overlayPanel.addEventListener('click', (e) => { if (e.target === overlayPanel) collapsePanelGate(); });
+        }
+
+        // ==========================================================================
+        // DYNAMIC MOUSE CORE POSITION CODESPACE (PHYSICS ENGINE)
         // ==========================================================================
         const cursorDot = document.querySelector('.custom-cursor-dot');
         const cursorRing = document.querySelector('.custom-cursor-ring');
@@ -165,7 +233,7 @@
         requestAnimationFrame(renderCursorEngine); 
 
         function initializeCursorInteractions() {
-            const interactiveElements = document.querySelectorAll('.card, .social-card-vertical, a, .tag');
+            const interactiveElements = document.querySelectorAll('.card, .social-card-vertical, a, .tag, .overlay-close-trigger');
             
             interactiveElements.forEach(element => {
                 element.addEventListener('mouseenter', () => {
