@@ -8,6 +8,8 @@
 </head>
 <body>
 
+    <div class="crt-scanlines"></div>
+
     <div class="custom-cursor-dot"></div>
     <div class="custom-cursor-ring"></div>
 
@@ -19,16 +21,73 @@
                         <div class="pulse-dot"></div>
                         <span class="mono">SYSTEM_OPERATIONAL // RUNNING</span>
                     </div>
+                    <div class="status-badge status-secondary">
+                        <span class="mono" id="live-system-clock">SYS_TIME // 00:00:00</span>
+                    </div>
+                    <div class="status-badge status-secondary mob-hide">
+                        <span class="mono" id="live-ping">PING // --ms</span>
+                    </div>
                 </div>
-                <h1 id="profile-name">--------</h1>
+                <h1 id="profile-name" class="glitch-text">--------</h1>
                 <p class="subtitle" id="profile-discipline">--------</p>
+
+                <div class="signal-equalizer-chassis">
+                    <div class="countdown-label mono">
+                        MILESTONE_TARGET // 2031-01-01 // T-MINUS: 
+                        <span id="countdown-string" style="color: var(--text-primary); font-weight: 700;">--D --H --M --S</span>
+                    </div>
+                    <div class="equalizer-bars-container">
+                        <span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span>
+                        <span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span>
+                        <span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span>
+                        <span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span>
+                    </div>
+                </div>
             </header>
 
             <aside id="socials-vertical-rail">
+                <div class="telemetry-vertical-chassis">
+                    <div class="telemetry-node">
+                        <span class="telemetry-label mono">ENV_TEMPERATURE</span>
+                        <h4 id="tel-temp" class="mono">FETCHING...</h4>
+                    </div>
+                    <div class="telemetry-node">
+                        <span class="telemetry-label mono">MEM_ALLOC</span>
+                        <h4 id="tel-alloc" class="mono">--------</h4>
+                    </div>
+                    <div class="telemetry-node">
+                        <span class="telemetry-label mono">SYS_LOCATION</span>
+                        <h4 id="tel-target" class="mono">CALCULATING...</h4>
+                    </div>
+                </div>
+
+                <div class="analog-clock-standalone-card">
+                    <span class="telemetry-label mono" style="margin-bottom: 8px;">CHRONO_SWEEP</span>
+                    <div class="analog-clock-container">
+                        <svg class="analog-clock-svg" viewBox="0 0 100 100">
+                            <rect class="clock-face" x="1" y="1" width="98" height="98" rx="14" />
+                            <circle class="clock-center" cx="50" cy="50" r="2.5" />
+                            <line id="hand-hour" class="clock-hand hour-hand" x1="50" y1="50" x2="50" y2="28" />
+                            <line id="hand-minute" class="clock-hand minute-hand" x1="50" y1="50" x2="50" y2="18" />
+                            <line id="hand-second" class="clock-hand second-hand" x1="50" y1="54" x2="50" y2="14" />
+                        </svg>
+                    </div>
+                </div>
             </aside>
         </div>
 
+        <div id="socials-horizontal-grid"></div>
+
         <main>
+            <section class="activity-chassis-wrapper">
+                <h2>00 // Git Core Contribution Streams</h2>
+                <div class="github-matrix-card">
+                    <div class="matrix-embed-container">
+                        <img id="github-graph-svg" src="" alt="git-core-stream-activity" />
+                    </div>
+                </div>
+            </section>
+
             <section>
                 <h2>01 // Core Vision</h2>
                 <div class="vision-card" id="profile-vision">--------</div>
@@ -75,11 +134,43 @@
                 const response = await fetch('data.json');
                 const data = await response.json();
                 
-                document.getElementById('profile-name').textContent = data.name;
+                glitchDecodeEffect(document.getElementById('profile-name'), data.name);
                 document.getElementById('profile-discipline').textContent = data.bio;
                 document.getElementById('profile-vision').textContent = data.vision;
 
-                // Render Academic Infrastructure Loop (Restored to Full Span)
+                document.getElementById('tel-alloc').textContent = data.telemetry.allocation;
+                initializeWeatherSystem();
+
+                const gitUsername = data.github_url.split('/').pop();
+                const graphImg = document.getElementById('github-graph-svg');
+                graphImg.src = `https://github-readme-activity-graph.vercel.app/graph?username=${gitUsername}&bg_color=090d16&color=10b981&line=10b981&point=ffffff&area=true&hide_border=true&custom_title=Contributions`;
+
+                const socialGrid = document.getElementById('socials-horizontal-grid');
+                socialGrid.innerHTML = `
+                    <a href="${data.github_url}" target="_blank" rel="noopener noreferrer" class="card social-card-horizontal">
+                        <svg class="github-icon" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                        <div class="social-text-block">
+                            <h3>Open Source Core</h3>
+                            <p>Track my repositories and codebase history live on GitHub.</p>
+                        </div>
+                        <span class="mono tracking-label">CONNECT_GATE // GITHUB →</span>
+                    </a>
+
+                    <a href="${data.hackerrank_url}" target="_blank" rel="noopener noreferrer" class="card social-card-horizontal">
+                        <svg class="hackerrank-icon" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M10 2h4v4h-4zM3 9h4v4H3zM17 9h4v4h-4zM10 16h4v4h-4zM3 16h4v4H3zM17 16h4v4h-4z"/>
+                            <path d="M5 11v7M19 11v7M12 4v14M5 11h14M5 18h14" stroke-dasharray="2 2"/>
+                        </svg>
+                        <div class="social-text-block">
+                            <h3>Logic Verification</h3>
+                            <p>Auditing mathematical algorithms and continuous structure solutions.</p>
+                        </div>
+                        <span class="mono tracking-label">CONNECT_GATE // HACKERRANK →</span>
+                    </a>
+                `;
+
                 const acadGrid = document.getElementById('academic-grid');
                 acadGrid.innerHTML = data.academic.map(acad => `
                     <div class="card click-expand-node long-span-card" data-title="${acad.institution}" data-category="ACADEMIC_INFRASTRUCTURE" data-details="${acad.extended_details}" data-tags="${acad.degree},${acad.timeline}">
@@ -92,7 +183,6 @@
                     </div>
                 `).join('');
 
-                // Render Skills Matrix Loop
                 const skillsGrid = document.getElementById('skills-grid');
                 skillsGrid.innerHTML = data.skills.map(skill => `
                     <div class="card click-expand-node" data-title="${skill.category}" data-category="SKILL_MATRIX_REGISTRY" data-details="${skill.extended_details}" data-tags="${skill.items.join(',')}">
@@ -103,7 +193,6 @@
                     </div>
                 `).join('');
 
-                // Render Registries Loop
                 const regGrid = document.getElementById('registries-grid');
                 regGrid.innerHTML = data.registries.map(reg => `
                     <div class="card click-expand-node" data-title="${reg.title}" data-category="ACTIVE_REGISTRY_BLOCK" data-details="${reg.extended_details}" data-tags="${reg.tags.join(',')}">
@@ -115,141 +204,143 @@
                     </div>
                 `).join('');
 
-                // Render Vertical Side Social Card
-                const socialRail = document.getElementById('socials-vertical-rail');
-                socialRail.innerHTML = `
-                    <a href="${data.github_url}" target="_blank" rel="noopener noreferrer" class="card social-card-vertical">
-                        <svg class="github-icon" viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                        </svg>
-                        <div class="social-text-block">
-                            <h3>Open Source Core</h3>
-                            <p>Track my active repositories and environment streams live on @red-android.</p>
-                        </div>
-                        <span class="mono tracking-label">CONNECT_GATE →</span>
-                    </a>
-                `;
-
                 initializeScrollWatcher();
                 initializeCursorInteractions();
-                initializeOverlayEngine();
+                overlayBoxSystem();
+                startSystemClocks();
 
             } catch (error) {
                 console.error("Data tracking initialization failed:", error);
             }
         }
 
-        // Smooth Scroll Viewport Interceptors
-        function initializeScrollWatcher() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.05 });
-
-            document.querySelectorAll('section').forEach(section => {
-                observer.observe(section);
-            });
+        function initializeWeatherSystem() {
+            const defaultLat = 28.6139; const defaultLon = 77.2090; 
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => { fetchWeatherData(position.coords.latitude, position.coords.longitude, false); },
+                    () => { fetchWeatherData(defaultLat, defaultLon, true); }
+                );
+            } else { fetchWeatherData(defaultLat, defaultLon, true); }
         }
 
-        // ==========================================================================
-        // DYNAMIC KINETIC BLAST OVERLAY ENGINE
-        // ==========================================================================
-        function initializeOverlayEngine() {
-            const overlayPanel = document.getElementById('system-overlay-panel');
-            const overlayBox = document.getElementById('system-overlay-box');
-            const pageWrapper = document.getElementById('master-page-wrapper');
-            const closeBtn = document.getElementById('overlay-close-btn');
+        async function fetchWeatherData(lat, lon, isFallback) {
+            try {
+                const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
+                const res = await fetch(url); const weatherData = await res.json();
+                const temp = Math.round(weatherData.current_weather.temperature);
+                document.getElementById('tel-temp').textContent = `${temp}°C`;
+                if (isFallback) { document.getElementById('tel-target').textContent = "NEW_DELHI_IN"; }
+                else { document.getElementById('tel-target').textContent = `${lat.toFixed(2)}N, ${lon.toFixed(2)}E`; }
+            } catch (err) {
+                document.getElementById('tel-temp').textContent = "OFFLINE"; document.getElementById('tel-target').textContent = "ERROR_NODE";
+            }
+        }
+
+        function glitchDecodeEffect(element, finalValue) {
+            const chars = '01X_//V__##@$%&*+=§?'; let iterations = 0;
+            const interval = setInterval(() => {
+                element.textContent = finalValue.split("").map((letter, index) => {
+                    if (index < iterations) return finalValue[index];
+                    return chars[Math.floor(Math.random() * chars.length)];
+                }).join("");
+                if (iterations >= finalValue.length) clearInterval(interval);
+                iterations += 1 / 3;
+            }, 30);
+        }
+
+        function startSystemClocks() {
+            const targetDate = new Date('January 1, 2031 00:00:00').getTime();
+            
+            const hrHand = document.getElementById('hand-hour');
+            const minHand = document.getElementById('hand-minute');
+            const secHand = document.getElementById('hand-second');
+
+            function updateTickers() {
+                const now = new Date(); document.getElementById('live-system-clock').textContent = `SYS_TIME // ${now.toTimeString().split(' ')[0]}`;
+                
+                const distance = targetDate - now.getTime();
+                if (distance < 0) { document.getElementById('countdown-string').textContent = "SYSTEM_GOAL_ACHIEVED"; }
+                else {
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    document.getElementById('countdown-string').textContent = `${days}D ${hours}H ${minutes}M ${seconds}S`;
+                }
+
+                const hoursVal = now.getHours();
+                const minutesVal = now.getMinutes();
+                const secondsVal = now.getSeconds();
+                const msVal = now.getMilliseconds();
+
+                const trueSecondsAngle = (secondsVal * 6) + (msVal * 0.006);
+                const trueMinutesAngle = (minutesVal * 6) + (secondsVal * 0.1);
+                const trueHoursAngle = ((hoursVal % 12) * 30) + (minutesVal * 0.5);
+
+                hrHand.style.transform = `rotate(${trueHoursAngle}deg)`;
+                minHand.style.transform = `rotate(${trueMinutesAngle}deg)`;
+                secHand.style.transform = `rotate(${trueSecondsAngle}deg)`;
+
+                requestAnimationFrame(updateTickers); 
+            }
+            requestAnimationFrame(updateTickers);
+
+            setInterval(() => {
+                const simulatedPing = Math.floor(Math.random() * (28 - 14 + 1)) + 14; document.getElementById('live-ping').textContent = `PING // ${simulatedPing}ms`;
+            }, 2500);
+        }
+
+        function initializeScrollWatcher() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+            }, { threshold: 0.05 });
+            document.querySelectorAll('section').forEach(section => observer.observe(section));
+        }
+
+        function overlayBoxSystem() {
+            const overlayPanel = document.getElementById('system-overlay-panel'); const overlayBox = document.getElementById('system-overlay-box');
+            const pageWrapper = document.getElementById('master-page-wrapper'); const closeBtn = document.getElementById('overlay-close-btn');
             const expandNodes = document.querySelectorAll('.click-expand-node');
-
-            const overlayNodeId = document.getElementById('overlay-node-id');
-            const overlayTitle = document.getElementById('overlay-title');
-            const overlayTags = document.getElementById('overlay-tags');
-            const overlayDesc = document.getElementById('overlay-desc');
-
+            const overlayNodeId = document.getElementById('overlay-node-id'); const overlayTitle = document.getElementById('overlay-title');
+            const overlayTags = document.getElementById('overlay-tags'); const overlayDesc = document.getElementById('overlay-desc');
             let sourceNode = null; 
 
             expandNodes.forEach(node => {
                 node.addEventListener('click', () => {
-                    sourceNode = node;
-                    const rect = node.getBoundingClientRect();
-
-                    overlayBox.style.setProperty('--origin-top', `${rect.top + (rect.height / 2)}px`);
-                    overlayBox.style.setProperty('--origin-left', `${rect.left + (rect.width / 2)}px`);
-
-                    overlayNodeId.textContent = `NODE_READOUT // ${node.getAttribute('data-category')}`;
-                    overlayTitle.textContent = node.getAttribute('data-title');
-                    overlayDesc.textContent = node.getAttribute('data-details');
-                    overlayTags.innerHTML = node.getAttribute('data-tags').split(',').map(t => `<span class="tag mono">${t}</span>`).join('');
-
-                    overlayPanel.classList.add('panel-active');
-                    pageWrapper.classList.add('blurred-state');
+                    sourceNode = node; const rect = node.getBoundingClientRect();
+                    overlayBox.style.setProperty('--origin-top', `${rect.top + (rect.height / 2)}px`); overlayBox.style.setProperty('--origin-left', `${rect.left + (rect.width / 2)}px`);
+                    overlayNodeId.textContent = `NODE_READOUT // ${node.getAttribute('data-category')}`; overlayTitle.textContent = node.getAttribute('data-title');
+                    overlayDesc.textContent = node.getAttribute('data-details'); overlayTags.innerHTML = node.getAttribute('data-tags').split(',').map(t => `<span class="tag mono">${t}</span>`).join('');
+                    overlayPanel.classList.add('panel-active'); pageWrapper.classList.add('blurred-state');
                 });
             });
 
             function collapsePanelGate() {
-                if (!sourceNode) return;
-                const rect = sourceNode.getBoundingClientRect();
-                
-                overlayBox.style.setProperty('--origin-top', `${rect.top + (rect.height / 2)}px`);
-                overlayBox.style.setProperty('--origin-left', `${rect.left + (rect.width / 2)}px`);
-
-                overlayPanel.classList.remove('panel-active');
-                pageWrapper.classList.remove('blurred-state');
+                if (!sourceNode) return; const rect = sourceNode.getBoundingClientRect();
+                overlayBox.style.setProperty('--origin-top', `${rect.top + (rect.height / 2)}px`); overlayBox.style.setProperty('--origin-left', `${rect.left + (rect.width / 2)}px`);
+                overlayPanel.classList.remove('panel-active'); pageWrapper.classList.remove('blurred-state');
             }
-
-            closeBtn.addEventListener('click', collapsePanelGate);
-            overlayPanel.addEventListener('click', (e) => { if (e.target === overlayPanel) collapsePanelGate(); });
+            closeBtn.addEventListener('click', collapsePanelGate); overlayPanel.addEventListener('click', (e) => { if (e.target === overlayPanel) collapsePanelGate(); });
         }
 
-        // ==========================================================================
-        // DYNAMIC MOUSE CORE POSITION CODESPACE (PHYSICS ENGINE)
-        // ==========================================================================
-        const cursorDot = document.querySelector('.custom-cursor-dot');
-        const cursorRing = document.querySelector('.custom-cursor-ring');
-
-        let mouseX = 0, mouseY = 0; 
-        let ringX = 0, ringY = 0;   
-
+        const cursorDot = document.querySelector('.custom-cursor-dot'); const cursorRing = document.querySelector('.custom-cursor-ring');
+        let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;   
         document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            
-            cursorDot.style.left = `${mouseX}px`;
-            cursorDot.style.top = `${mouseY}px`;
+            mouseX = e.clientX; mouseY = e.clientY; cursorDot.style.left = `${mouseX}px`; cursorDot.style.top = `${mouseY}px`;
         });
-
         function renderCursorEngine() {
-            ringX += (mouseX - ringX) * 0.15;
-            ringY += (mouseY - ringY) * 0.15;
-            
-            cursorRing.style.left = `${ringX}px`;
-            cursorRing.style.top = `${ringY}px`;
-            
-            requestAnimationFrame(renderCursorEngine);
+            ringX += (mouseX - ringX) * 0.15; ringY += (mouseY - ringY) * 0.15; cursorRing.style.left = `${ringX}px`; cursorRing.style.top = `${ringY}px`; requestAnimationFrame(renderCursorEngine);
         }
         requestAnimationFrame(renderCursorEngine); 
-
         function initializeCursorInteractions() {
-            const interactiveElements = document.querySelectorAll('.card, .social-card-vertical, a, .tag, .overlay-close-trigger');
-            
+            const interactiveElements = document.querySelectorAll('.card, .social-card-horizontal, a, .tag, .overlay-close-trigger');
             interactiveElements.forEach(element => {
-                element.addEventListener('mouseenter', () => {
-                    cursorDot.classList.add('hover-active');
-                    cursorRing.classList.add('hover-active');
-                });
-                element.addEventListener('mouseleave', () => {
-                    cursorDot.classList.remove('hover-active');
-                    cursorRing.classList.remove('hover-active');
-                });
+                element.addEventListener('mouseenter', () => { cursorDot.classList.add('hover-active'); cursorRing.classList.add('hover-active'); });
+                element.addEventListener('mouseleave', () => { cursorDot.classList.remove('hover-active'); cursorRing.classList.remove('hover-active'); });
             });
         }
-
-        document.addEventListener('mousedown', () => cursorRing.classList.add('click-active'));
-        document.addEventListener('mouseup', () => cursorRing.classList.remove('click-active'));
-
+        document.addEventListener('mousedown', () => cursorRing.classList.add('click-active')); document.addEventListener('mouseup', () => cursorRing.classList.remove('click-active'));
         window.addEventListener('DOMContentLoaded', loadPortfolio);
     </script>
 </body>
