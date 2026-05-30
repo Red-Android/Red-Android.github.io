@@ -44,10 +44,10 @@ header { opacity: 0; transform: translateY(20px); animation: slideUp 0.8s cubic-
 h1.glitch-text { font-size: 46px; font-weight: 800; letter-spacing: -1.5px; margin-bottom: 16px; text-shadow: 0 0 15px rgba(255, 255, 255, 0.08); }
 p.subtitle { font-size: 14.5px; color: var(--text-secondary); }
 
-#socials-vertical-rail { display: flex; flex-direction: column; opacity: 0; transform: translateY(20px); animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.1s; }
+#socials-vertical-rail { display: flex; flex-direction: column; gap: 20px; opacity: 0; transform: translateY(20px); animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.1s; }
 
 /* ==========================================================================
-   UNIFIED INTEGRATED TELEMETRY CHASSIS CONTAINER TOWER
+   SOLID UNIFIED TELEMETRY CHASSIS HOUSING (Contiguous Block Layout)
    ========================================================================== */
 .telemetry-integrated-chassis {
     background-color: var(--bg-surface); border: 1px solid var(--border-muted); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 26px; position: relative; overflow: hidden; z-index: 1; width: 100%;
@@ -59,13 +59,13 @@ p.subtitle { font-size: 14.5px; color: var(--text-secondary); }
 
 .telemetry-label { font-size: 10px; color: var(--text-secondary); display: block; margin-bottom: 6px; font-weight: 700; }
 
-/* Internal Grid Divider Separation Trailing Lines */
+/* Structured Grid Trailing Dividers */
 .calendar-wrapper-node {
     border-bottom: 1px dashed var(--border-muted); padding-bottom: 22px; position: relative; z-index: 2;
 }
 .chrono-climate-wrapper-node { position: relative; z-index: 2; }
 
-/* Calendar Subsystem Specifications */
+/* Calendar Subsystem Calculations */
 .calendar-header-title { font-size: 11px; color: var(--text-secondary); margin-bottom: 12px; font-weight: 700; letter-spacing: 0.5px; }
 .calendar-grid-days, .calendar-grid-dates { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
 .calendar-grid-days { font-size: 10px; color: var(--accent-glow); font-weight: 700; margin-bottom: 8px; border-bottom: 1px solid rgba(31, 41, 55, 0.4); padding-bottom: 6px; }
@@ -194,7 +194,7 @@ footer { margin-top: 60px; border-top: 1px dashed var(--border-muted); padding-t
 .overlay-panel-container { position: fixed; inset: 0; background-color: rgba(2, 6, 23, 0.4); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 32px; opacity: 0; pointer-events: none; transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
 .overlay-panel-container.panel-active { opacity: 1; pointer-events: auto; }
 .overlay-panel-box { background-color: var(--bg-surface); border: 1px solid var(--border-muted); width: 100%; max-width: 620px; border-radius: 12px; padding: 44px; position: relative; box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.7); transform-origin: var(--origin-left, 50%) var(--origin-top, 50%); transform: scale(0.05) translate(0, 0); opacity: 0; filter: blur(10px); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease, filter 0.4s ease; }
-.overlay-panel-box { transform: scale(1) translate(0, 0); opacity: 1; filter: blur(0px); }
+.overlay-panel-container.panel-active .overlay-panel-box { transform: scale(1) translate(0, 0); opacity: 1; filter: blur(0px); }
 .overlay-close-trigger { position: absolute; top: 24px; right: 28px; background: none; border: none; color: var(--accent-glow); font-size: 16px; font-weight: 400; font-family: ui-monospace, monospace; text-shadow: 0 0 8px rgba(16, 185, 129, 0.4), 0 0 16px rgba(16, 185, 129, 0.2); transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease; }
 .overlay-close-trigger:hover { color: #ffffff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.6); transform: scale(1.1); }
 .accent-title-glow { font-size: 26px; font-weight: 800; letter-spacing: -0.75px; color: var(--text-primary); line-height: 1.25; }
