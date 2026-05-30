@@ -15,14 +15,8 @@ html, body, a, .card, .social-card-horizontal, .tag, .overlay-close-trigger {
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif;
-    background-color: var(--bg-base);
-    color: var(--text-primary);
-    line-height: 1.6;
-    padding: 80px 24px;
-    max-width: 850px;
-    margin: 0 auto;
-    -webkit-font-smoothing: antialiased;
-    position: relative;
+    background-color: var(--bg-base); color: var(--text-primary); line-height: 1.6;
+    padding: 80px 24px; max-width: 850px; margin: 0 auto; -webkit-font-smoothing: antialiased; position: relative;
 }
 
 .crt-scanlines {
@@ -31,15 +25,10 @@ body {
     background-size: 100% 4px, 6px 100%; opacity: 0.4;
 }
 
-#master-page-wrapper {
-    transition: filter 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: filter, transform;
-}
+#master-page-wrapper { transition: filter 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); will-change: filter, transform; }
 #master-page-wrapper.blurred-state { filter: blur(12px); transform: scale(0.98); }
 
-.top-layout-grid {
-    display: grid; grid-template-columns: 1.4fr 0.8fr; gap: 40px; align-items: start; margin-bottom: 24px;
-}
+.top-layout-grid { display: grid; grid-template-columns: 1.4fr 0.8fr; gap: 40px; align-items: start; margin-bottom: 24px; }
 
 header { opacity: 0; transform: translateY(20px); animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 .system-status { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 16px; }
@@ -55,29 +44,57 @@ header { opacity: 0; transform: translateY(20px); animation: slideUp 0.8s cubic-
 h1.glitch-text { font-size: 46px; font-weight: 800; letter-spacing: -1.5px; margin-bottom: 16px; text-shadow: 0 0 15px rgba(255, 255, 255, 0.08); }
 p.subtitle { font-size: 14.5px; color: var(--text-secondary); }
 
-#socials-vertical-rail { display: flex; flex-direction: column; gap: 20px; opacity: 0; transform: translateY(20px); animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.1s; }
+#socials-vertical-rail { display: flex; flex-direction: column; opacity: 0; transform: translateY(20px); animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.1s; }
 
 /* ==========================================================================
-   VERTICAL TELEMETRY CHASSIS TOWER
+   UNIFIED INTEGRATED TELEMETRY CHASSIS CONTAINER TOWER
    ========================================================================== */
-.telemetry-vertical-chassis {
-    background-color: var(--bg-surface); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 20px; position: relative; overflow: hidden; z-index: 1;
+.telemetry-integrated-chassis {
+    background-color: var(--bg-surface); border: 1px solid var(--border-muted); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 26px; position: relative; overflow: hidden; z-index: 1; width: 100%;
 }
-.telemetry-vertical-chassis::before {
+.telemetry-integrated-chassis::before {
     content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, transparent 40%, #00f2fe 75%, transparent 100%); z-index: -2; opacity: 0.75; filter: blur(3px) drop-shadow(0 0 12px #00f2fe); animation: rotateSystemBeam 6s linear infinite;
 }
-.telemetry-vertical-chassis::after { content: ""; position: absolute; inset: 1px; background: var(--bg-surface); border-radius: 7px; z-index: -1; }
-.telemetry-node { position: relative; z-index: 2; border-bottom: 1px dashed var(--border-muted); padding-bottom: 14px; width: 100%; }
-.telemetry-node:last-child { border-bottom: none; padding-bottom: 0; }
-.telemetry-label { font-size: 10px; color: var(--text-secondary); display: block; margin-bottom: 4px; }
-.telemetry-node h4 { font-size: 14px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.5px; }
+.telemetry-integrated-chassis::after { content: ""; position: absolute; inset: 1px; background: var(--bg-surface); border-radius: 7px; z-index: -1; }
+
+.telemetry-label { font-size: 10px; color: var(--text-secondary); display: block; margin-bottom: 6px; font-weight: 700; }
+
+/* Internal Grid Divider Separation Trailing Lines */
+.calendar-wrapper-node {
+    border-bottom: 1px dashed var(--border-muted); padding-bottom: 22px; position: relative; z-index: 2;
+}
+.chrono-climate-wrapper-node { position: relative; z-index: 2; }
+
+/* Calendar Subsystem Specifications */
+.calendar-header-title { font-size: 11px; color: var(--text-secondary); margin-bottom: 12px; font-weight: 700; letter-spacing: 0.5px; }
+.calendar-grid-days, .calendar-grid-dates { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
+.calendar-grid-days { font-size: 10px; color: var(--accent-glow); font-weight: 700; margin-bottom: 8px; border-bottom: 1px solid rgba(31, 41, 55, 0.4); padding-bottom: 6px; }
+.cal-day-node { font-size: 11px; color: var(--text-secondary); padding: 2px 0; border-radius: 4px; font-family: ui-monospace, monospace; }
+.cal-day-node.active-today { background: rgba(16, 185, 129, 0.12); border: 1px solid var(--accent-glow); color: #ffffff; text-shadow: 0 0 6px var(--accent-glow); font-weight: 700; }
+.cal-day-empty { content: ""; }
+
+/* Analog Instrument Component Specs */
+.analog-clock-container { width: 110px; height: 110px; display: flex; align-items: center; justify-content: center; margin: 0 auto; margin-top: 6px; }
+.analog-clock-svg { width: 100%; height: 100%; overflow: visible; }
+.clock-face { fill: rgba(3, 7, 18, 0.45); stroke: var(--border-muted); stroke-width: 1px; }
+.clock-center { fill: #00f2fe; }
+.clock-hand { stroke-linecap: round; transform-origin: 50px 50px; will-change: transform; }
+.hour-hand { stroke: var(--text-primary); stroke-width: 2.25px; }
+.minute-hand { stroke: #00f2fe; stroke-width: 1.75px; }
+.second-hand { stroke: var(--accent-glow); stroke-width: 1.25px; }
+
+/* Avionics Climate Interface Alignment Row */
+.embedded-weather-row {
+    display: flex; align-items: center; gap: 12px; width: 100%; margin-top: 18px; border-top: 1px dashed var(--border-muted); padding-top: 14px;
+}
+.weather-icon-indicator { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: rgba(31, 41, 55, 0.3); border: 1px solid var(--border-muted); border-radius: 4px; color: var(--accent-glow); }
+.weather-meta-data h4 { font-size: 16px; font-weight: 700; color: var(--text-primary); line-height: 1.1; margin-bottom: 2px; }
+.location-subtext { font-size: 9px; color: var(--text-secondary); opacity: 0.8; display: block; }
 
 /* ==========================================================================
    SIGNAL EQUALIZER CHASSIS FRAME
    ========================================================================== */
-.signal-equalizer-chassis {
-    margin-top: 24px; background-color: rgba(9, 13, 22, 0.4); border: 1px dashed var(--border-muted); border-radius: 6px; padding: 16px 20px;
-}
+.signal-equalizer-chassis { margin-top: 24px; background-color: rgba(9, 13, 22, 0.4); border: 1px dashed var(--border-muted); border-radius: 6px; padding: 16px 20px; }
 .countdown-label { font-size: 10px; color: var(--text-secondary); margin-bottom: 12px; display: block; word-spacing: 1px; }
 .equalizer-bars-container { display: flex; align-items: flex-end; gap: 3px; height: 40px; }
 .eq-bar { flex-grow: 1; height: 4px; background-color: var(--accent-glow); opacity: 0.85; border-radius: 1px; transform-origin: bottom; animation: renderSignalWave 1s ease-in-out infinite alternate; }
@@ -100,48 +117,6 @@ p.subtitle { font-size: 14.5px; color: var(--text-secondary); }
 .eq-bar:nth-child(16) { animation-duration: 0.7s; animation-delay: 0.2s; }
 
 @keyframes renderSignalWave { 0% { transform: scaleY(1); } 100% { transform: scaleY(10); } }
-
-/* ==========================================================================
-   HIGH-IMPACT STANDALONE ANALOG COCKPIT CARD (MAXI-SCALE UPGRADE)
-   ========================================================================== */
-.analog-clock-standalone-card {
-    background-color: var(--bg-surface);
-    border: 1px dashed var(--border-muted);
-    border-radius: 8px;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    position: relative;
-    width: 100%;
-    /* Computes the exact matching layout baseline height delta space */
-    min-height: 182px; 
-}
-.analog-clock-container {
-    width: 130px; /* Advanced draw space from 80px */
-    height: 130px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto; /* Snaps the core ring right down the geometric alignment track */
-    margin-top: 4px;
-}
-.analog-clock-svg { 
-    width: 100%; 
-    height: 100%; 
-    overflow: visible;
-}
-.clock-face {
-    fill: rgba(3, 7, 18, 0.45);
-    stroke: var(--border-muted);
-    stroke-width: 1px;
-}
-.clock-center { fill: #00f2fe; }
-.clock-hand { stroke-linecap: round; transform-origin: 50px 50px; will-change: transform; }
-.hour-hand { stroke: var(--text-primary); stroke-width: 2.25px; }
-.minute-hand { stroke: #00f2fe; stroke-width: 1.75px; }
-.second-hand { stroke: var(--accent-glow); stroke-width: 1.25px; }
 
 /* ==========================================================================
    HORIZONTAL NETWORKING CARD GRID MATRIX
@@ -188,7 +163,7 @@ h2::after { content: ""; flex-grow: 1; height: 1px; background: linear-gradient(
 .card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(16, 185, 129, 0.04); }
 .card h3, .card p, .tags, .social-text-block, .tracking-label, .github-icon, .hackerrank-icon { position: relative; z-index: 2; }
 
-.card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+.card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
 .card h3::after { content: "→"; color: var(--accent-glow); opacity: 0; transform: translateX(-10px); transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
 .card:hover h3::after { opacity: 1; transform: translateX(0); }
 .card p { font-size: 13.5px; color: var(--text-secondary); margin-bottom: 16px; }
@@ -204,12 +179,22 @@ h2::after { content: ""; flex-grow: 1; height: 1px; background: linear-gradient(
 .card:hover .tag { border-color: rgba(16, 185, 129, 0.15); color: var(--text-primary); }
 
 /* ==========================================================================
+   STATIC GLOW TRANSMISSION TERMINAL FOOTER DEEP MATRIX SPECIFICATIONS
+   ========================================================================== */
+footer { margin-top: 60px; border-top: 1px dashed var(--border-muted); padding-top: 30px; }
+.static-terminal-footer-card { background-color: var(--bg-surface); border: 1px solid var(--border-muted); border-radius: 8px; padding: 24px; width: 100%; }
+.footer-title-label { display: block; font-weight: 700; margin-bottom: 12px; }
+.footer-log-stream { font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; }
+.footer-log-stream:last-child { margin-bottom: 0; }
+.footer-copy-value { color: var(--text-primary); font-weight: 700; user-select: all !important; text-shadow: 0 0 10px rgba(255, 255, 255, 0.15); }
+
+/* ==========================================================================
    DYNAMIC INTERACTIVE MODAL DETAILED PANELS
    ========================================================================== */
 .overlay-panel-container { position: fixed; inset: 0; background-color: rgba(2, 6, 23, 0.4); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 32px; opacity: 0; pointer-events: none; transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
 .overlay-panel-container.panel-active { opacity: 1; pointer-events: auto; }
 .overlay-panel-box { background-color: var(--bg-surface); border: 1px solid var(--border-muted); width: 100%; max-width: 620px; border-radius: 12px; padding: 44px; position: relative; box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.7); transform-origin: var(--origin-left, 50%) var(--origin-top, 50%); transform: scale(0.05) translate(0, 0); opacity: 0; filter: blur(10px); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease, filter 0.4s ease; }
-.overlay-panel-container.panel-active .overlay-panel-box { transform: scale(1) translate(0, 0); opacity: 1; filter: blur(0px); }
+.overlay-panel-box { transform: scale(1) translate(0, 0); opacity: 1; filter: blur(0px); }
 .overlay-close-trigger { position: absolute; top: 24px; right: 28px; background: none; border: none; color: var(--accent-glow); font-size: 16px; font-weight: 400; font-family: ui-monospace, monospace; text-shadow: 0 0 8px rgba(16, 185, 129, 0.4), 0 0 16px rgba(16, 185, 129, 0.2); transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease; }
 .overlay-close-trigger:hover { color: #ffffff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.6); transform: scale(1.1); }
 .accent-title-glow { font-size: 26px; font-weight: 800; letter-spacing: -0.75px; color: var(--text-primary); line-height: 1.25; }
@@ -243,5 +228,5 @@ h2::after { content: ""; flex-grow: 1; height: 1px; background: linear-gradient(
     .overlay-panel-box { padding: 24px; padding-top: 54px; transform-origin: center center !important; }
     .accent-title-glow { font-size: 22px; }
     #master-page-wrapper.blurred-state { filter: blur(6px); transform: scale(1); }
-    .activity-chassis-wrapper, .signal-equalizer-chassis, .analog-clock-standalone-card { display: none !important; } 
+    .activity-chassis-wrapper, .signal-equalizer-chassis, .telemetry-integrated-chassis { display: none !important; } 
 }

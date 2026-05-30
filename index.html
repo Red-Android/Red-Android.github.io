@@ -46,32 +46,39 @@
             </header>
 
             <aside id="socials-vertical-rail">
-                <div class="telemetry-vertical-chassis">
-                    <div class="telemetry-node">
-                        <span class="telemetry-label mono">ENV_TEMPERATURE</span>
-                        <h4 id="tel-temp" class="mono">FETCHING...</h4>
+                <div class="telemetry-integrated-chassis">
+                    
+                    <div class="calendar-wrapper-node">
+                        <div class="calendar-header-title mono" id="calendar-month-year">MONTH // YEAR</div>
+                        <div class="calendar-grid-days mono">
+                            <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                        </div>
+                        <div class="calendar-grid-dates" id="calendar-dates-matrix"></div>
                     </div>
-                    <div class="telemetry-node">
-                        <span class="telemetry-label mono">MEM_ALLOC</span>
-                        <h4 id="tel-alloc" class="mono">--------</h4>
-                    </div>
-                    <div class="telemetry-node">
-                        <span class="telemetry-label mono">SYS_LOCATION</span>
-                        <h4 id="tel-target" class="mono">CALCULATING...</h4>
-                    </div>
-                </div>
 
-                <div class="analog-clock-standalone-card">
-                    <span class="telemetry-label mono" style="margin-bottom: 8px;">CHRONO_SWEEP</span>
-                    <div class="analog-clock-container">
-                        <svg class="analog-clock-svg" viewBox="0 0 100 100">
-                            <rect class="clock-face" x="1" y="1" width="98" height="98" rx="14" />
-                            <circle class="clock-center" cx="50" cy="50" r="2.5" />
-                            <line id="hand-hour" class="clock-hand hour-hand" x1="50" y1="50" x2="50" y2="28" />
-                            <line id="hand-minute" class="clock-hand minute-hand" x1="50" y1="50" x2="50" y2="18" />
-                            <line id="hand-second" class="clock-hand second-hand" x1="50" y1="54" x2="50" y2="14" />
-                        </svg>
+                    <div class="chrono-climate-wrapper-node">
+                        <span class="telemetry-label mono">CHRONO_SWEEP // ENV_METRICS</span>
+                        <div class="analog-clock-container">
+                            <svg class="analog-clock-svg" viewBox="0 0 100 100">
+                                <rect class="clock-face" x="1" y="1" width="98" height="98" rx="14" />
+                                <circle class="clock-center" cx="50" cy="50" r="2.5" />
+                                <line id="hand-hour" class="clock-hand hour-hand" x1="50" y1="50" x2="50" y2="28" />
+                                <line id="hand-minute" class="clock-hand minute-hand" x1="50" y1="50" x2="50" y2="18" />
+                                <line id="hand-second" class="clock-hand second-hand" x1="50" y1="54" x2="50" y2="14" />
+                            </svg>
+                        </div>
+                        
+                        <div class="embedded-weather-row">
+                            <div class="weather-icon-indicator" id="weather-icon-slot">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                            </div>
+                            <div class="weather-meta-data">
+                                <h4 id="tel-temp" class="mono">--°C</h4>
+                                <span id="tel-target" class="mono location-subtext">TRACKING...</span>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </aside>
         </div>
@@ -95,22 +102,27 @@
 
             <section>
                 <h2>02 // Academic Infrastructure</h2>
-                <div class="grid" id="academic-grid">
-                </div>
+                <div class="grid" id="academic-grid"></div>
             </section>
 
             <section>
                 <h2>03 // System Skills Matrix</h2>
-                <div class="grid" id="skills-grid">
-                </div>
+                <div class="grid" id="skills-grid"></div>
             </section>
 
             <section>
                 <h2>04 // Active Registries</h2>
-                <div class="grid" id="registries-grid">
-                </div>
+                <div class="grid" id="registries-grid"></div>
             </section>
         </main>
+
+        <footer>
+            <div class="static-terminal-footer-card">
+                <span class="mono footer-title-label">// SYSTEM_INBOUND_GATEWAYS</span>
+                <p class="mono footer-log-stream">EMAIL // <span class="footer-copy-value">animeshkumar.cont@gmail.com</span></p>
+                <p class="mono footer-log-stream">LINKEDIN // <span class="footer-copy-value">linkedin.com/in/your-username</span></p>
+            </div>
+        </footer>
     </div>
 
     <div class="overlay-panel-container" id="system-overlay-panel">
@@ -129,88 +141,128 @@
     </div>
 
     <script>
+        const fallbackLocalRegistry = {
+            "name": "Red-Android",
+            "bio": "Bridging physical silicon architectures with optimized low-level software execution. Focusing on firmware development, hardware acceleration, and system-level performance optimizations. Operating at the intersection of hardware constraints and system computing velocity to eliminate software latency.",
+            "github_url": "https://github.com/red-android",
+            "hackerrank_url": "https://www.hackerrank.com/profile/animeshrrt",
+            "vision": "To architect deeply integrated embedded ecosystems that optimize processing overhead. Navigating the intersection of hardware constraints and system computing velocity to eliminate software latency.",
+            "academic": [{
+                "degree": "Bachelor of Technology (B.Tech)", "major": "Electronics & Computer Science Engineering", "institution": "KIIT University", "timeline": "2026 - 2030", "status": "TRACK_INITIALIZED",
+                "extended_details": "Electronics & Computer Science Engineering (ECSE) at KIIT focuses on processing logic constraints. The curriculum bridges hardware engineering (semiconductor structures, microcontrollers, embedded firmware architectures) with advanced computer science theories (memory mapping optimizations, algorithmic logic, and computing execution safety loops).\n\nPrior Academic Foundation: Completed schooling at JVM Shyamali, Ranchi, with a rigorous focus on advanced Mathematics and Physics frameworks."
+            }],
+            "skills": [
+                { "category": "Low-Level Core", "items": ["C/C++", "Memory Management", "Pointers & Structures", "Data Structures"], "extended_details": "Deep focus on unmanaged execution spaces. Engineering performance software models by micro-managing raw RAM allocations, eliminating memory leaks through manual tracking frameworks, optimizing data parsing layers via pointer arithmetic arrays, and auditing complex structural algorithms." },
+                { "category": "Hardware / Systems", "items": ["Microcontrollers", "Digital Systems", "Circuit Architecture", "Git Version Control"], "extended_details": "Firmware and hardware compilation systems. Interfacing low-level code instructions directly with register maps on microcontrollers, debugging logic gates in digital circuit architectures, and organizing version trees to coordinate hardware-software parity constraints." },
+                { "category": "Software Track", "items": ["Asynchronous JavaScript", "CSS Grid/Flexbox", "HTML5 Engine", "Linux Systems"], "extended_details": "High-velocity client interface runtimes. Structuring event-driven execution loops via non-blocking asynchronous threads, engineering native mathematical layout grids within browser rendering environments, and operating directly inside Linux shell terminals." }
+            ],
+            "registries": [
+                { "title": "CS50x 2026 Sandbox", "description": "Core computer science algorithms, memory layouts, pointer tracking systems, and sorting architectures.", "tags": ["C Programming", "Algorithms", "Data Structures"], "extended_details": "Active low-level software testing sandbox. Writing C solutions to master stack/heap allocation limits, tracing raw physical pointer nodes through linear execution blocks, tracking system bottlenecks, and studying continuous data arrays." },
+                { "title": "Low-Level Portfolio Engine", "description": "A high-performance, asynchronous JSON-driven web architecture utilizing modular design systems.", "tags": ["Asynchronous JS", "Dynamic UI", "CSS Engineering"], "extended_details": "The code subsystem fueling this exact website shell. Built using asynchronous data-fetching pipelines that read static asset registries on the fly, paired with complex CSS mathematical calculation matrices for custom cursor tracking loops and revolving conic light fields." }
+            ]
+        };
+
         async function loadPortfolio() {
+            let data;
             try {
                 const response = await fetch('data.json');
-                const data = await response.json();
-                
-                glitchDecodeEffect(document.getElementById('profile-name'), data.name);
-                document.getElementById('profile-discipline').textContent = data.bio;
-                document.getElementById('profile-vision').textContent = data.vision;
-
-                document.getElementById('tel-alloc').textContent = data.telemetry.allocation;
-                initializeWeatherSystem();
-
-                const gitUsername = data.github_url.split('/').pop();
-                const graphImg = document.getElementById('github-graph-svg');
-                graphImg.src = `https://github-readme-activity-graph.vercel.app/graph?username=${gitUsername}&bg_color=090d16&color=10b981&line=10b981&point=ffffff&area=true&hide_border=true&custom_title=Contributions`;
-
-                const socialGrid = document.getElementById('socials-horizontal-grid');
-                socialGrid.innerHTML = `
-                    <a href="${data.github_url}" target="_blank" rel="noopener noreferrer" class="card social-card-horizontal">
-                        <svg class="github-icon" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                        </svg>
-                        <div class="social-text-block">
-                            <h3>Open Source Core</h3>
-                            <p>Track my repositories and codebase history live on GitHub.</p>
-                        </div>
-                        <span class="mono tracking-label">CONNECT_GATE // GITHUB →</span>
-                    </a>
-
-                    <a href="${data.hackerrank_url}" target="_blank" rel="noopener noreferrer" class="card social-card-horizontal">
-                        <svg class="hackerrank-icon" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M10 2h4v4h-4zM3 9h4v4H3zM17 9h4v4h-4zM10 16h4v4h-4zM3 16h4v4H3zM17 16h4v4h-4z"/>
-                            <path d="M5 11v7M19 11v7M12 4v14M5 11h14M5 18h14" stroke-dasharray="2 2"/>
-                        </svg>
-                        <div class="social-text-block">
-                            <h3>Logic Verification</h3>
-                            <p>Auditing mathematical algorithms and continuous structure solutions.</p>
-                        </div>
-                        <span class="mono tracking-label">CONNECT_GATE // HACKERRANK →</span>
-                    </a>
-                `;
-
-                const acadGrid = document.getElementById('academic-grid');
-                acadGrid.innerHTML = data.academic.map(acad => `
-                    <div class="card click-expand-node long-span-card" data-title="${acad.institution}" data-category="ACADEMIC_INFRASTRUCTURE" data-details="${acad.extended_details}" data-tags="${acad.degree},${acad.timeline}">
-                        <h3>${acad.institution}</h3>
-                        <p>${acad.degree} in ${acad.major}</p>
-                        <div class="tags">
-                            <span class="tag mono">${acad.timeline}</span>
-                            <span class="tag mono" style="color:#10b981;">${acad.status}</span>
-                        </div>
-                    </div>
-                `).join('');
-
-                const skillsGrid = document.getElementById('skills-grid');
-                skillsGrid.innerHTML = data.skills.map(skill => `
-                    <div class="card click-expand-node" data-title="${skill.category}" data-category="SKILL_MATRIX_REGISTRY" data-details="${skill.extended_details}" data-tags="${skill.items.join(',')}">
-                        <h3>${skill.category}</h3>
-                        <div class="tags" style="margin-top:16px;">
-                            ${skill.items.map(i => `<span class="tag">${i}</span>`).join('')}
-                        </div>
-                    </div>
-                `).join('');
-
-                const regGrid = document.getElementById('registries-grid');
-                regGrid.innerHTML = data.registries.map(reg => `
-                    <div class="card click-expand-node" data-title="${reg.title}" data-category="ACTIVE_REGISTRY_BLOCK" data-details="${reg.extended_details}" data-tags="${reg.tags.join(',')}">
-                        <h3>${reg.title}</h3>
-                        <p>${reg.description}</p>
-                        <div class="tags">
-                            ${reg.tags.map(t => `<span class="tag mono">${t}</span>`).join('')}
-                        </div>
-                    </div>
-                `).join('');
-
-                initializeScrollWatcher();
-                initializeCursorInteractions();
-                overlayBoxSystem();
-                startSystemClocks();
-
+                data = await response.json();
             } catch (error) {
-                console.error("Data tracking initialization failed:", error);
+                data = fallbackLocalRegistry;
+            }
+            
+            glitchDecodeEffect(document.getElementById('profile-name'), data.name);
+            document.getElementById('profile-discipline').textContent = data.bio;
+            document.getElementById('profile-vision').textContent = data.vision;
+
+            initializeWeatherSystem();
+            renderMatrixCalendar();
+
+            const gitUsername = data.github_url.split('/').pop();
+            const graphImg = document.getElementById('github-graph-svg');
+            graphImg.src = `https://github-readme-activity-graph.vercel.app/graph?username=${gitUsername}&bg_color=090d16&color=10b981&line=10b981&point=ffffff&area=true&hide_border=true&custom_title=Contributions`;
+
+            const socialGrid = document.getElementById('socials-horizontal-grid');
+            socialGrid.innerHTML = `
+                <a href="${data.github_url}" target="_blank" rel="noopener noreferrer" class="card social-card-horizontal">
+                    <svg class="github-icon" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                    <div class="social-text-block">
+                        <h3>Open Source Core</h3>
+                        <p>Track my repositories and codebase history live on GitHub.</p>
+                    </div>
+                    <span class="mono tracking-label">CONNECT_GATE // GITHUB →</span>
+                </a>
+
+                <a href="${data.hackerrank_url}" target="_blank" rel="noopener noreferrer" class="card social-card-horizontal">
+                    <svg class="hackerrank-icon" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10 2h4v4h-4zM3 9h4v4H3zM17 9h4v4h-4zM10 16h4v4h-4zM3 16h4v4H3zM17 16h4v4h-4z"/>
+                        <path d="M5 11v7M19 11v7M12 4v14M5 11h14M5 18h14" stroke-dasharray="2 2"/>
+                    </svg>
+                    <div class="social-text-block">
+                        <h3>Logic Verification</h3>
+                        <p>Auditing mathematical algorithms and continuous structure solutions.</p>
+                    </div>
+                    <span class="mono tracking-label">CONNECT_GATE // HACKERRANK →</span>
+                </a>
+            `;
+
+            const acadGrid = document.getElementById('academic-grid');
+            acadGrid.innerHTML = data.academic.map(acad => `
+                <div class="card click-expand-node long-span-card" data-title="${acad.institution}" data-category="ACADEMIC_INFRASTRUCTURE" data-details="${acad.extended_details}" data-tags="${acad.degree},${acad.timeline}">
+                    <h3>${acad.institution}</h3>
+                    <p>${acad.degree} in ${acad.major}</p>
+                    <div class="tags">
+                        <span class="tag mono">${acad.timeline}</span>
+                        <span class="tag mono" style="color:#10b981;">${acad.status}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            const skillsGrid = document.getElementById('skills-grid');
+            skillsGrid.innerHTML = data.skills.map(skill => `
+                <div class="card click-expand-node" data-title="${skill.category}" data-category="SKILL_MATRIX_REGISTRY" data-details="${skill.extended_details}" data-tags="${skill.items.join(',')}">
+                    <h3>${skill.category}</h3>
+                    <div class="tags" style="margin-top:16px;">
+                        ${skill.items.map(i => `<span class="tag">${i}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            const regGrid = document.getElementById('registries-grid');
+            regGrid.innerHTML = data.registries.map(reg => `
+                <div class="card click-expand-node" data-title="${reg.title}" data-category="ACTIVE_REGISTRY_BLOCK" data-details="${reg.extended_details}" data-tags="${reg.tags.join(',')}">
+                    <h3>${reg.title}</h3>
+                    <p>${reg.description}</p>
+                    <div class="tags">
+                        ${reg.tags.map(t => `<span class="tag mono">${t}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            initializeScrollWatcher();
+            initializeCursorInteractions();
+            overlayBoxSystem();
+            startSystemClocks();
+        }
+
+        function renderMatrixCalendar() {
+            const now = new Date(); const currentYear = now.getFullYear(); const currentMonth = now.getMonth(); const currentDate = now.getDate();
+            const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+            const monthHeader = document.getElementById('calendar-month-year');
+            if (monthHeader) monthHeader.textContent = `${monthNames[currentMonth]} // ${currentYear}`;
+            
+            const firstDayIndex = new Date(currentYear, currentMonth, 1).getDay();
+            const totalDaysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const datesMatrix = document.getElementById('calendar-dates-matrix'); 
+            if (!datesMatrix) return;
+            
+            datesMatrix.innerHTML = '';
+            for (let i = 0; i < firstDayIndex; i++) { datesMatrix.innerHTML += `<span class="cal-day-empty"></span>`; }
+            for (let day = 1; day <= totalDaysInMonth; day++) {
+                if (day === currentDate) { datesMatrix.innerHTML += `<span class="cal-day-node active-today mono">${day}</span>`; }
+                else { datesMatrix.innerHTML += `<span class="cal-day-node mono">${day}</span>`; }
             }
         }
 
@@ -229,11 +281,26 @@
                 const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
                 const res = await fetch(url); const weatherData = await res.json();
                 const temp = Math.round(weatherData.current_weather.temperature);
+                const code = weatherData.current_weather.weathercode;
+                
                 document.getElementById('tel-temp').textContent = `${temp}°C`;
-                if (isFallback) { document.getElementById('tel-target').textContent = "NEW_DELHI_IN"; }
-                else { document.getElementById('tel-target').textContent = `${lat.toFixed(2)}N, ${lon.toFixed(2)}E`; }
+                if (isFallback) { document.getElementById('tel-target').textContent = "NEW_DELHI // IN"; }
+                else { document.getElementById('tel-target').textContent = `${lat.toFixed(1)}N, ${lon.toFixed(1)}E`; }
+                
+                const iconSlot = document.getElementById('weather-icon-slot');
+                if (!iconSlot) return;
+                
+                if (code === 0) {
+                    iconSlot.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+                } else if (code >= 1 && code <= 3) {
+                    iconSlot.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#00f2fe" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>`;
+                } else if (code >= 51 && code <= 67) {
+                    iconSlot.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#00f2fe" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="16" y1="13" x2="14" y2="21"/><line x1="10" y1="13" x2="8" y2="21"/><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"/></svg>`;
+                } else {
+                    iconSlot.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
+                }
             } catch (err) {
-                document.getElementById('tel-temp').textContent = "OFFLINE"; document.getElementById('tel-target').textContent = "ERROR_NODE";
+                document.getElementById('tel-temp').textContent = "ERR";
             }
         }
 
@@ -251,14 +318,10 @@
 
         function startSystemClocks() {
             const targetDate = new Date('January 1, 2031 00:00:00').getTime();
-            
-            const hrHand = document.getElementById('hand-hour');
-            const minHand = document.getElementById('hand-minute');
-            const secHand = document.getElementById('hand-second');
+            const hrHand = document.getElementById('hand-hour'); const minHand = document.getElementById('hand-minute'); const secHand = document.getElementById('hand-second');
 
             function updateTickers() {
                 const now = new Date(); document.getElementById('live-system-clock').textContent = `SYS_TIME // ${now.toTimeString().split(' ')[0]}`;
-                
                 const distance = targetDate - now.getTime();
                 if (distance < 0) { document.getElementById('countdown-string').textContent = "SYSTEM_GOAL_ACHIEVED"; }
                 else {
@@ -268,20 +331,10 @@
                     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
                     document.getElementById('countdown-string').textContent = `${days}D ${hours}H ${minutes}M ${seconds}S`;
                 }
+                const hoursVal = now.getHours(); const minutesVal = now.getMinutes(); const secondsVal = now.getSeconds(); const msVal = now.getMilliseconds();
+                const trueSecondsAngle = (secondsVal * 6) + (msVal * 0.006); const trueMinutesAngle = (minutesVal * 6) + (secondsVal * 0.1); const trueHoursAngle = ((hoursVal % 12) * 30) + (minutesVal * 0.5);
 
-                const hoursVal = now.getHours();
-                const minutesVal = now.getMinutes();
-                const secondsVal = now.getSeconds();
-                const msVal = now.getMilliseconds();
-
-                const trueSecondsAngle = (secondsVal * 6) + (msVal * 0.006);
-                const trueMinutesAngle = (minutesVal * 6) + (secondsVal * 0.1);
-                const trueHoursAngle = ((hoursVal % 12) * 30) + (minutesVal * 0.5);
-
-                hrHand.style.transform = `rotate(${trueHoursAngle}deg)`;
-                minHand.style.transform = `rotate(${trueMinutesAngle}deg)`;
-                secHand.style.transform = `rotate(${trueSecondsAngle}deg)`;
-
+                hrHand.style.transform = `rotate(${trueHoursAngle}deg)`; minHand.style.transform = `rotate(${trueMinutesAngle}deg)`; secHand.style.transform = `rotate(${trueSecondsAngle}deg)`;
                 requestAnimationFrame(updateTickers); 
             }
             requestAnimationFrame(updateTickers);
@@ -300,7 +353,7 @@
 
         function overlayBoxSystem() {
             const overlayPanel = document.getElementById('system-overlay-panel'); const overlayBox = document.getElementById('system-overlay-box');
-            const pageWrapper = document.getElementById('master-page-wrapper'); const closeBtn = document.getElementById('overlay-close-btn');
+            const pageWrapper = document.getElementById('master-page-wrapper'); const closeBtn = document.getElementById('overlay-close-trigger');
             const expandNodes = document.querySelectorAll('.click-expand-node');
             const overlayNodeId = document.getElementById('overlay-node-id'); const overlayTitle = document.getElementById('overlay-title');
             const overlayTags = document.getElementById('overlay-tags'); const overlayDesc = document.getElementById('overlay-desc');
@@ -321,17 +374,14 @@
                 overlayBox.style.setProperty('--origin-top', `${rect.top + (rect.height / 2)}px`); overlayBox.style.setProperty('--origin-left', `${rect.left + (rect.width / 2)}px`);
                 overlayPanel.classList.remove('panel-active'); pageWrapper.classList.remove('blurred-state');
             }
-            closeBtn.addEventListener('click', collapsePanelGate); overlayPanel.addEventListener('click', (e) => { if (e.target === overlayPanel) collapsePanelGate(); });
+            if (closeBtn) closeBtn.addEventListener('click', collapsePanelGate); 
+            if (overlayPanel) overlayPanel.addEventListener('click', (e) => { if (e.target === overlayPanel) collapsePanelGate(); });
         }
 
         const cursorDot = document.querySelector('.custom-cursor-dot'); const cursorRing = document.querySelector('.custom-cursor-ring');
         let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;   
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX; mouseY = e.clientY; cursorDot.style.left = `${mouseX}px`; cursorDot.style.top = `${mouseY}px`;
-        });
-        function renderCursorEngine() {
-            ringX += (mouseX - ringX) * 0.15; ringY += (mouseY - ringY) * 0.15; cursorRing.style.left = `${ringX}px`; cursorRing.style.top = `${ringY}px`; requestAnimationFrame(renderCursorEngine);
-        }
+        document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; cursorDot.style.left = `${mouseX}px`; cursorDot.style.top = `${mouseY}px`; });
+        function renderCursorEngine() { ringX += (mouseX - ringX) * 0.15; ringY += (mouseY - ringY) * 0.15; cursorRing.style.left = `${ringX}px`; cursorRing.style.top = `${ringY}px`; requestAnimationFrame(renderCursorEngine); }
         requestAnimationFrame(renderCursorEngine); 
         function initializeCursorInteractions() {
             const interactiveElements = document.querySelectorAll('.card, .social-card-horizontal, a, .tag, .overlay-close-trigger');
