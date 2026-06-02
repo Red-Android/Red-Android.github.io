@@ -32,15 +32,9 @@
                 <p class="subtitle" id="profile-discipline">--------</p>
 
                 <div class="signal-equalizer-chassis">
-                    <div class="countdown-label mono">
-                        MILESTONE_TARGET // 2031-01-01 // T-MINUS: 
-                        <span id="countdown-string" style="color: var(--text-primary); font-weight: 700;">--D --H --M --S</span>
-                    </div>
-                    <div class="equalizer-bars-container">
-                        <span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span>
-                        <span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span>
-                        <span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span>
-                        <span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span>
+                    <div class="countdown-label mono">MILESTONE_TARGET // 2031-01-01</div>
+                    <div id="countdown-clock-glowing-matrix">
+                        <span id="countdown-string">--D --H --M --S</span>
                     </div>
                 </div>
             </header>
@@ -60,6 +54,15 @@
                         <span class="telemetry-label mono">CHRONO_SWEEP // ENV_METRICS</span>
                         <div class="analog-clock-container">
                             <svg class="analog-clock-svg" viewBox="0 0 100 100">
+                                <defs>
+                                    <filter id="glow-hand-primary" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feGaussianBlur stdDeviation="1.5" result="blur" />
+                                        <feMerge>
+                                            <feMergeNode in="blur" />
+                                            <feMergeNode in="SourceGraphic" />
+                                        </feMerge>
+                                    </filter>
+                                </defs>
                                 <rect class="clock-face" x="1" y="1" width="98" height="98" rx="14" />
                                 <circle class="clock-center" cx="50" cy="50" r="2.5" />
                                 <line id="hand-hour" class="clock-hand hour-hand" x1="50" y1="50" x2="50" y2="28" />
@@ -70,7 +73,7 @@
                         
                         <div class="embedded-weather-row">
                             <div class="weather-icon-indicator" id="weather-icon-slot">
-                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
                             </div>
                             <div class="weather-meta-data">
                                 <h4 id="tel-temp" class="mono">--°C</h4>
@@ -116,7 +119,6 @@
             </section>
         </main>
 
-        <!-- Static Terminal Outbound Data Transmission Frame -->
         <footer>
             <div class="static-terminal-footer-card">
                 <span class="mono footer-title-label">// SYSTEM_INBOUND_GATEWAYS</span>
@@ -354,8 +356,6 @@
         function overlayBoxSystem() {
             const overlayPanel = document.getElementById('system-overlay-panel'); const overlayBox = document.getElementById('system-overlay-box');
             const pageWrapper = document.getElementById('master-page-wrapper'); 
-            
-            // 🛠️ ALIGNMENT RESTORED: Connected cleanly to 'overlay-close-btn' HTML element marker
             const closeBtn = document.getElementById('overlay-close-btn');
             
             const expandNodes = document.querySelectorAll('.click-expand-node');
