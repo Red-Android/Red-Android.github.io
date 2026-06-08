@@ -42,7 +42,56 @@ header { opacity: 0; transform: translateY(20px); animation: slideUp 0.8s cubic-
 .pulse-dot { width: 6px; height: 6px; background-color: var(--accent-glow); border-radius: 50%; box-shadow: 0 0 8px var(--accent-glow); animation: pulse 2s infinite; }
 
 h1.glitch-text { font-size: 46px; font-weight: 800; letter-spacing: -1.5px; margin-bottom: 16px; text-shadow: 0 0 15px rgba(255, 255, 255, 0.08); }
-p.subtitle { font-size: 14.5px; color: var(--text-secondary); }
+
+/* ==========================================================================
+   KINETIC PROTOTYPE WARNING MARQUEE STRUCTURE
+   ========================================================================== */
+.prototype-warning-chassis {
+    margin-top: 20px;
+    background-color: rgba(9, 13, 22, 0.65);
+    border: 1px solid var(--accent-glow);
+    border-radius: 6px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.15), inset 0 0 10px rgba(16, 185, 129, 0.05);
+}
+
+.marquee-track-vector {
+    display: flex;
+    white-space: nowrap;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(16, 185, 129, 0.08);
+    border-bottom: 1px solid rgba(16, 185, 129, 0.25);
+    padding: 3px 0;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-shadow: 0 0 6px var(--accent-glow);
+}
+
+.marquee-track-vector span {
+    display: inline-block;
+    animation: advanceWarningStream 22s linear infinite;
+    padding-left: 4px;
+}
+
+.warning-body-stream {
+    margin-top: 14px;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+@keyframes advanceWarningStream {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
+}
 
 #socials-vertical-rail { display: flex; flex-direction: column; gap: 20px; opacity: 0; transform: translateY(20px); animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.1s; }
 
@@ -59,13 +108,11 @@ p.subtitle { font-size: 14.5px; color: var(--text-secondary); }
 
 .telemetry-label { font-size: 10px; color: var(--text-secondary); display: block; margin-bottom: 6px; font-weight: 700; }
 
-/* Structured Grid Trailing Dividers */
 .calendar-wrapper-node {
     border-bottom: 1px dashed var(--border-muted); padding-bottom: 22px; position: relative; z-index: 2;
 }
 .chrono-climate-wrapper-node { position: relative; z-index: 2; }
 
-/* Calendar Subsystem Calculations */
 .calendar-header-title { font-size: 11px; color: var(--text-secondary); margin-bottom: 12px; font-weight: 700; letter-spacing: 0.5px; }
 .calendar-grid-days, .calendar-grid-dates { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
 .calendar-grid-days { font-size: 10px; color: var(--accent-glow); font-weight: 700; margin-bottom: 8px; border-bottom: 1px solid rgba(31, 41, 55, 0.4); padding-bottom: 6px; }
@@ -73,14 +120,11 @@ p.subtitle { font-size: 14.5px; color: var(--text-secondary); }
 .cal-day-node.active-today { background: rgba(16, 185, 129, 0.12); border: 1px solid var(--accent-glow); color: #ffffff; text-shadow: 0 0 6px var(--accent-glow); font-weight: 700; }
 .cal-day-empty { content: ""; }
 
-/* Analog Instrument Component Specs */
 .analog-clock-container { width: 110px; height: 110px; display: flex; align-items: center; justify-content: center; margin: 0 auto; margin-top: 6px; }
 .analog-clock-svg { width: 100%; height: 100%; overflow: visible; }
 .clock-face { fill: rgba(3, 7, 18, 0.45); stroke: var(--border-muted); stroke-width: 1px; }
 
-/* ==========================================================================
-   HIGH-LUMINANCE AVIONICS COCKPIT CLOCK HAND GLOW MATRIX FIXED 
-   ========================================================================== */
+/* Dynamic Hardware Indicator Hands */
 .clock-center { 
     fill: #00f2fe; 
     filter: drop-shadow(0 0 4px #00f2fe);
@@ -92,28 +136,24 @@ p.subtitle { font-size: 14.5px; color: var(--text-secondary); }
     will-change: transform; 
 }
 
-/* Hour Hand: Enforced crisp white with light emissions */
 .hour-hand { 
     stroke: #ffffff; 
     stroke-width: 2.5px; 
     filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.6));
 }
 
-/* Minute Hand: Enforced sharp cyan with custom matching glow */
 .minute-hand { 
     stroke: #00f2fe; 
     stroke-width: 1.8px; 
     filter: drop-shadow(0 0 5px #00f2fe);
 }
 
-/* Second Hand: Dynamic ambient light trail tracking vector */
 .second-hand { 
     stroke: var(--accent-glow); 
     stroke-width: 1.25px; 
     filter: drop-shadow(0 0 8px var(--accent-glow));
 }
 
-/* Avionics Climate Interface Alignment Row */
 .embedded-weather-row {
     display: flex; align-items: center; gap: 12px; width: 100%; margin-top: 18px; border-top: 1px dashed var(--border-muted); padding-top: 14px;
 }
