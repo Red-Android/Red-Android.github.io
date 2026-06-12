@@ -8,8 +8,6 @@
 </head>
 <body>
 
-    <div class="crt-scanlines"></div>
-
     <div class="custom-cursor-dot"></div>
     <div class="custom-cursor-ring"></div>
 
@@ -61,7 +59,7 @@
                         <span class="telemetry-label mono">CHRONO_SWEEP // ENV_METRICS</span>
                         <div class="analog-clock-container">
                             <svg class="analog-clock-svg" viewBox="0 0 100 100">
-                                <rect class="clock-face" x="1" y="1" width="98" height="98" rx="14" />
+                                <rect class="clock-face" x="1" y="1" width="98" height="98" rx="20" />
                                 <circle class="clock-center" cx="50" cy="50" r="2.5" />
                                 <line id="hand-hour" class="clock-hand hour-hand" x1="50" y1="50" x2="50" y2="28" />
                                 <line id="hand-minute" class="clock-hand minute-hand" x1="50" y1="50" x2="50" y2="18" />
@@ -181,8 +179,7 @@
             const gitUsername = data.github_url.split('/').pop();
             const graphImg = document.getElementById('github-graph-svg');
             
-            // Re-targeted the GitHub metrics layout generation API to output the red aesthetic stream
-            graphImg.src = `https://github-readme-activity-graph.vercel.app/graph?username=${gitUsername}&bg_color=000000&color=ff003c&line=ff003c&point=ffffff&area=true&hide_border=true&custom_title=Contributions`;
+            graphImg.src = `https://github-readme-activity-graph.vercel.app/graph?username=${gitUsername}&bg_color=0f3636&color=f4ebd9&line=f4ebd9&point=ffffff&area=true&hide_border=true&custom_title=Contributions`;
 
             const socialGrid = document.getElementById('socials-horizontal-grid');
             socialGrid.innerHTML = `
@@ -217,7 +214,7 @@
                     <p>${acad.degree} in ${acad.major}</p>
                     <div class="tags">
                         <span class="tag mono">${acad.timeline}</span>
-                        <span class="tag mono" style="color:var(--accent-glow);">${acad.status}</span>
+                        <span class="tag mono" style="color:var(--text-primary); font-weight:700;">${acad.status}</span>
                     </div>
                 </div>
             `).join('');
@@ -293,13 +290,13 @@
                 if (!iconSlot) return;
                 
                 if (code === 0) {
-                    iconSlot.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ff003c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+                    iconSlot.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--text-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
                 } else if (code >= 1 && code <= 3) {
-                    iconSlot.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ff003c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>`;
+                    iconSlot.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--text-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>`;
                 } else if (code >= 51 && code <= 67) {
-                    iconSlot.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ff003c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="16" y1="13" x2="14" y2="21"/><line x1="10" y1="13" x2="8" y2="21"/><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"/></svg>`;
+                    iconSlot.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--text-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="16" y1="13" x2="14" y2="21"/><line x1="10" y1="13" x2="8" y2="21"/><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"/></svg>`;
                 } else {
-                    iconSlot.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
+                    iconSlot.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
                 }
             } catch (err) {
                 document.getElementById('tel-temp').textContent = "ERR";
@@ -307,14 +304,14 @@
         }
 
         function glitchDecodeEffect(element, finalValue) {
-            const chars = '01X_//V__##@$%&*+=§?'; let iterations = 0;
+            let iterations = 0;
             const interval = setInterval(() => {
                 element.textContent = finalValue.split("").map((letter, index) => {
                     if (index < iterations) return finalValue[index];
-                    return chars[Math.floor(Math.random() * chars.length)];
+                    return String.fromCharCode(65 + Math.floor(Math.random() * 26));
                 }).join("");
                 if (iterations >= finalValue.length) clearInterval(interval);
-                iterations += 1 / 3;
+                iterations += 1 / 2;
             }, 30);
         }
 
@@ -342,7 +339,7 @@
             requestAnimationFrame(updateTickers);
 
             setInterval(() => {
-                const simulatedPing = Math.floor(Math.random() * (28 - 14 + 1)) + 14; document.getElementById('live-ping').textContent = `PING // ${simulatedPing}ms`;
+                const simulatedPing = Math.floor(Math.random() * (24 - 11 + 1)) + 11; document.getElementById('live-ping').textContent = `PING // ${simulatedPing}ms`;
             }, 2500);
         }
 
