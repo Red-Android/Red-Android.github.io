@@ -47,7 +47,7 @@
             <aside id="socials-vertical-rail">
                 <div class="telemetry-integrated-chassis">
                     
-                    <div class="calendar-wrapper-node">
+                    <div class="calendar-wrapper-node click-trigger-calendar">
                         <div class="calendar-header-title mono" id="calendar-month-year">MONTH // YEAR</div>
                         <div class="calendar-grid-days mono">
                             <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
@@ -126,15 +126,7 @@
     <div class="overlay-panel-container" id="system-overlay-panel">
         <div class="overlay-panel-box" id="system-overlay-box">
             <button class="overlay-close-trigger" id="overlay-close-btn">✕</button>
-            <div class="overlay-data-payload">
-                <div class="status-badge" style="margin-bottom: 24px; display: inline-flex;">
-                    <div class="pulse-dot"></div>
-                    <span class="mono" id="overlay-node-id">SYSTEM_INFO_READOUT</span>
-                </div>
-                <h3 id="overlay-title" class="accent-title-glow">--------</h3>
-                <div class="tags" id="overlay-tags" style="margin: 24px 0;"></div>
-                <p id="overlay-desc" class="mono-text-stream">--------</p>
-            </div>
+            <div class="overlay-data-payload" id="overlay-dynamic-payload-target"></div>
         </div>
     </div>
 
@@ -160,6 +152,24 @@
             ]
         };
 
+        // Complete database of official Indian holidays and operational milestones
+        const calendarEventsDatabase = {
+            0: ["01 // NEW_YEARS_DAY_REGISTRY", "14 // MAKAR_SANKRANTI // PONGAL", "26 // REPUBLIC_DAY_CELEBRATION"],
+            1: ["14 // MAHA_SHIVRATRI_FESTIVAL", "25 // SYSTEM_BENCHMARK_VALIDATION"],
+            2: ["13 // HOLI_FESTIVAL_BREAK", "28 // REGIONAL_LOGIC_SYNTHESIS_RUN"],
+            3: ["02 // RAM_NAVAMI_HOLIDAY", "05 // MAHAVIR_JAYANTI", "10 // GOOD_FRIDAY_TELEMETRY"],
+            4: ["01 // MAY_DAY_ISOLATION", "11 // NATIONAL_TECHNOLOGY_DAY"],
+            5: ["04 // KIIT_CORE_SEMESTER_INITIALIZATION", "12 // EMBEDDED_REGISTER_MAPPING_LAB", "26 // FIRMWARE_COMPILATION_RUN"],
+            6: ["02 // ID-UL-ZUHA_BAKRID", "18 // QUANTUM_GATE_PARITY_CHECK"],
+            7: ["15 // INDEPENDENCE_DAY_CELEBRATION", "28 // RAKSHA_BANDHAN_HOLIDAY"],
+            8: ["04 // GANESH_CHATURTHI_BREAK", "05 // TEACHERS_DAY_SYMPOSIUM"],
+            9: ["02 // MAHATMA_GANDHI_JAYANTI", "19 // DURGA_PUJA_DUSSEHRA_VACATION"],
+            10: ["08 // DIWALI_DEEPAVALI_FESTIVAL", "12 // GURU_NANAK_JAYANTI"],
+            11: ["25 // CHRISTMAS_DAY_HOLIDAY", "31 // BUFFER_DEALLOCATION_LOOPS"]
+        };
+
+        let systemActiveDate = new Date();
+
         async function loadPortfolio() {
             let data;
             try {
@@ -178,14 +188,13 @@
 
             const gitUsername = data.github_url.split('/').pop();
             const graphImg = document.getElementById('github-graph-svg');
-            
             graphImg.src = `https://github-readme-activity-graph.vercel.app/graph?username=${gitUsername}&bg_color=0f3636&color=f4ebd9&line=f4ebd9&point=ffffff&area=true&hide_border=true&custom_title=Contributions`;
 
             const socialGrid = document.getElementById('socials-horizontal-grid');
             socialGrid.innerHTML = `
                 <a href="${data.github_url}" target="_blank" rel="noopener noreferrer" class="card social-card-horizontal">
                     <svg class="github-icon" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.75" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65(5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
                     </svg>
                     <div class="social-text-block">
                         <h3>Open Source Core</h3>
@@ -247,20 +256,24 @@
         }
 
         function renderMatrixCalendar() {
-            const now = new Date(); const currentYear = now.getFullYear(); const currentMonth = now.getMonth(); const currentDate = now.getDate();
+            const year = systemActiveDate.getFullYear(); 
+            const month = systemActiveDate.getMonth(); 
+            const realToday = new Date();
             const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-            const monthHeader = document.getElementById('calendar-month-year');
-            if (monthHeader) monthHeader.textContent = `${monthNames[currentMonth]} // ${currentYear}`;
             
-            const firstDayIndex = new Date(currentYear, currentMonth, 1).getDay();
-            const totalDaysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const monthHeader = document.getElementById('calendar-month-year');
+            if (monthHeader) monthHeader.textContent = `${monthNames[month]} // ${year}`;
+            
+            const firstDayIndex = new Date(year, month, 1).getDay();
+            const totalDaysInMonth = new Date(year, month + 1, 0).getDate();
             const datesMatrix = document.getElementById('calendar-dates-matrix'); 
             if (!datesMatrix) return;
             
             datesMatrix.innerHTML = '';
             for (let i = 0; i < firstDayIndex; i++) { datesMatrix.innerHTML += `<span class="cal-day-empty"></span>`; }
             for (let day = 1; day <= totalDaysInMonth; day++) {
-                if (day === currentDate) { datesMatrix.innerHTML += `<span class="cal-day-node active-today mono">${day}</span>`; }
+                const isCurrentToday = (day === realToday.getDate() && month === realToday.getMonth() && year === realToday.getFullYear());
+                if (isCurrentToday) { datesMatrix.innerHTML += `<span class="cal-day-node active-today mono">${day}</span>`; }
                 else { datesMatrix.innerHTML += `<span class="cal-day-node mono">${day}</span>`; }
             }
         }
@@ -333,7 +346,9 @@
                 const hoursVal = now.getHours(); const minutesVal = now.getMinutes(); const secondsVal = now.getSeconds(); const msVal = now.getMilliseconds();
                 const trueSecondsAngle = (secondsVal * 6) + (msVal * 0.006); const trueMinutesAngle = (minutesVal * 6) + (secondsVal * 0.1); const trueHoursAngle = ((hoursVal % 12) * 30) + (minutesVal * 0.5);
 
-                hrHand.style.transform = `rotate(${trueHoursAngle}deg)`; minHand.style.transform = `rotate(${trueMinutesAngle}deg)`; secHand.style.transform = `rotate(${trueSecondsAngle}deg)`;
+                if(hrHand) hrHand.style.transform = `rotate(${trueHoursAngle}deg)`; 
+                if(minHand) minHand.style.transform = `rotate(${trueMinutesAngle}deg)`; 
+                if(secHand) secHand.style.transform = `rotate(${trueSecondsAngle}deg)`;
                 requestAnimationFrame(updateTickers); 
             }
             requestAnimationFrame(updateTickers);
@@ -350,31 +365,118 @@
             document.querySelectorAll('section').forEach(section => observer.observe(section));
         }
 
+        // JavaScript Navigation Slider Sequence Logic
+        window.changeOverlayCalendarMonth = function(offset) {
+            systemActiveDate.setMonth(systemActiveDate.getMonth() + offset);
+            renderMatrixCalendar();
+            
+            const monthLabel = document.getElementById('modal-active-month-label');
+            const targetGrid = document.getElementById('modal-active-grid-target');
+            const targetList = document.getElementById('modal-bounce-list-target');
+            
+            if (monthLabel && targetGrid && targetList) {
+                const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+                monthLabel.textContent = `${monthNames[systemActiveDate.getMonth()]} // ${systemActiveDate.getFullYear()}`;
+                
+                const year = systemActiveDate.getFullYear();
+                const month = systemActiveDate.getMonth();
+                const startDay = new Date(year, month, 1).getDay();
+                const maxDays = new Date(year, month + 1, 0).getDate();
+                
+                let gridHtml = '';
+                for (let i = 0; i < startDay; i++) { gridHtml += `<span class="cal-day-empty"></span>`; }
+                for (let d = 1; d <= maxDays; d++) { gridHtml += `<span class="cal-day-node mono">${d}</span>`; }
+                targetGrid.innerHTML = gridHtml;
+
+                const currentEvents = calendarEventsDatabase[month] || ["01 // STANDARD_SANDBOX_TICK"];
+                targetList.innerHTML = currentEvents.map((evt, idx) => `
+                    <div class="bounce-pill-node mono" style="animation-delay: ${idx * 0.08}s;">
+                        <div class="indicator-dot-beige"></div>
+                        <span>${evt}</span>
+                    </div>
+                `).join('');
+            }
+        };
+
         function overlayBoxSystem() {
             const overlayPanel = document.getElementById('system-overlay-panel'); const overlayBox = document.getElementById('system-overlay-box');
-            const pageWrapper = document.getElementById('master-page-wrapper'); 
-            const closeBtn = document.getElementById('overlay-close-btn');
-            
+            const pageWrapper = document.getElementById('master-page-wrapper'); const closeBtn = document.getElementById('overlay-close-btn');
+            const payloadTarget = document.getElementById('overlay-dynamic-payload-target');
             const expandNodes = document.querySelectorAll('.click-expand-node');
-            const overlayNodeId = document.getElementById('overlay-node-id'); const overlayTitle = document.getElementById('overlay-title');
-            const overlayTags = document.getElementById('overlay-tags'); const overlayDesc = document.getElementById('overlay-desc');
+            const calendarTrigger = document.querySelector('.click-trigger-calendar');
             let sourceNode = null; 
 
             expandNodes.forEach(node => {
                 node.addEventListener('click', () => {
                     sourceNode = node; const rect = node.getBoundingClientRect();
                     overlayBox.style.setProperty('--origin-top', `${rect.top + (rect.height / 2)}px`); overlayBox.style.setProperty('--origin-left', `${rect.left + (rect.width / 2)}px`);
-                    overlayNodeId.textContent = `NODE_READOUT // ${node.getAttribute('data-category')}`; overlayTitle.textContent = node.getAttribute('data-title');
-                    overlayDesc.textContent = node.getAttribute('data-details'); overlayTags.innerHTML = node.getAttribute('data-tags').split(',').map(t => `<span class="tag mono">${t}</span>`).join('');
+                    
+                    payloadTarget.innerHTML = `
+                        <div class="status-badge" style="margin-bottom: 20px; display: inline-flex;">
+                            <div class="pulse-dot"></div>
+                            <span class="mono">NODE_READOUT // ${node.getAttribute('data-category')}</span>
+                        </div>
+                        <h3 class="accent-title-glow" style="margin-bottom:12px;">${node.getAttribute('data-title')}</h3>
+                        <div class="tags" style="margin: 16px 0;">
+                            ${node.getAttribute('data-tags').split(',').map(t => `<span class="tag mono">${t}</span>`).join('')}
+                        </div>
+                        <p class="mono-text-stream">${node.getAttribute('data-details')}</p>
+                    `;
                     overlayPanel.classList.add('panel-active'); pageWrapper.classList.add('blurred-state');
                 });
             });
 
-            function collapsePanelGate() {
-                if (!sourceNode) return; const rect = sourceNode.getBoundingClientRect();
-                overlayBox.style.setProperty('--origin-top', `${rect.top + (rect.height / 2)}px`); overlayBox.style.setProperty('--origin-left', `${rect.left + (rect.width / 2)}px`);
-                overlayPanel.classList.remove('panel-active'); pageWrapper.classList.remove('blurred-state');
+            if (calendarTrigger) {
+                calendarTrigger.addEventListener('click', () => {
+                    sourceNode = calendarTrigger; const rect = calendarTrigger.getBoundingClientRect();
+                    overlayBox.style.setProperty('--origin-top', `${rect.top + (rect.height / 2)}px`); overlayBox.style.setProperty('--origin-left', `${rect.left + (rect.width / 2)}px`);
+                    
+                    const now = systemActiveDate;
+                    const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+                    const currentMonth = now.getMonth();
+                    const events = calendarEventsDatabase[currentMonth] || ["01 // STANDARD_SANDBOX_TICK"];
+
+                    payloadTarget.innerHTML = `
+                        <div class="status-badge" style="margin-bottom: 14px;">
+                            <div class="pulse-dot"></div>
+                            <span class="mono">SYSTEM_CHRONO_SANDBOX_ACTIVE</span>
+                        </div>
+                        <h3 class="accent-title-glow" style="margin-bottom: 4px;">MONTHLY // EVENTS</h3>
+                        <p class="mono-text-stream" style="margin-bottom: 16px; opacity:0.65;">Adjust parameters utilizing the active track sequence.</p>
+                        
+                        <div class="minimalist-slider-wrapper">
+                            <span class="slider-btn mono" onclick="changeOverlayCalendarMonth(-1)">◀</span>
+                            <span class="slider-active-month mono" id="modal-active-month-label">${monthNames[currentMonth]} // ${now.getFullYear()}</span>
+                            <span class="slider-btn mono" onclick="changeOverlayCalendarMonth(1)">▶</span>
+                        </div>
+
+                        <div class="modal-calendar-swipe-deck" style="margin-top:16px;">
+                            <div class="calendar-grid-days mono" style="margin-bottom: 8px; opacity:0.8;">
+                                <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                            </div>
+                            <div class="calendar-grid-dates" id="modal-active-grid-target">
+                                ${document.getElementById('calendar-dates-matrix').innerHTML}
+                            </div>
+                        </div>
+
+                        <div class="modal-timeline-events-container">
+                            <span class="mono telemetry-label" style="color: var(--accent-glow); margin-bottom: 8px;">// IMPORTANT_DAYS_AND_FESTIVALS</span>
+                            <div class="bounce-drop-list-wrapper" id="modal-bounce-list-target">
+                                ${events.map((evt, idx) => `
+                                    <div class="bounce-pill-node mono" style="animation-delay: ${idx * 0.08}s;">
+                                        <div class="indicator-dot-beige"></div>
+                                        <span>${evt}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+
+                    overlayPanel.classList.add('panel-active'); pageWrapper.classList.add('blurred-state');
+                });
             }
+
+            function collapsePanelGate() { overlayPanel.classList.remove('panel-active'); pageWrapper.classList.remove('blurred-state'); }
             if (closeBtn) closeBtn.addEventListener('click', collapsePanelGate); 
             if (overlayPanel) overlayPanel.addEventListener('click', (e) => { if (e.target === overlayPanel) collapsePanelGate(); });
         }
@@ -385,7 +487,7 @@
         function renderCursorEngine() { ringX += (mouseX - ringX) * 0.15; ringY += (mouseY - ringY) * 0.15; cursorRing.style.left = `${ringX}px`; cursorRing.style.top = `${ringY}px`; requestAnimationFrame(renderCursorEngine); }
         requestAnimationFrame(renderCursorEngine); 
         function initializeCursorInteractions() {
-            const interactiveElements = document.querySelectorAll('.card, .social-card-horizontal, a, .tag, .overlay-close-trigger');
+            const interactiveElements = document.querySelectorAll('.card, .social-card-horizontal, a, .tag, .overlay-close-trigger, .click-trigger-calendar');
             interactiveElements.forEach(element => {
                 element.addEventListener('mouseenter', () => { cursorDot.classList.add('hover-active'); cursorRing.classList.add('hover-active'); });
                 element.addEventListener('mouseleave', () => { cursorDot.classList.remove('hover-active'); cursorRing.classList.remove('hover-active'); });
