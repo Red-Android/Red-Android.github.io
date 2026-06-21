@@ -25,7 +25,7 @@
       "extended_details": "Deep focus on unmanaged execution spaces. Engineering performance software models by micro-managing raw RAM allocations, eliminating memory leaks through manual tracking frameworks, optimizing data parsing layers via pointer arithmetic arrays, and auditing complex structural algorithms."
     },
     { 
-      "category": "Hardware / Systems", 
+      "category": "Hardware / Systems / Integration Between Software & Hardware", 
       "items": ["Microcontrollers", "Digital Systems", "Circuit Architecture", "Git Version Control"],
       "extended_details": "Firmware and hardware compilation systems. Interfacing low-level code instructions directly with register maps on microcontrollers, debugging logic gates in digital circuit architectures, and organizing version trees to coordinate hardware-software parity constraints."
     },
